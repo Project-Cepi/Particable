@@ -9,19 +9,19 @@ import kotlin.math.sin
 
 data class SphereRenderer(
     val radius: Double,
-    val particleSpacing: Double
+    val particleSpacing: Double = .1
 ) : Renderer {
     private val iterable = run {
         val list = LinkedList<Vector>()
         val divisions = (2 * PI / asin(particleSpacing / radius)).toInt()
 
-        CircleRenderer(radius, divisions).forEach(list::add)
+        Renderer.circle(radius, divisions).forEach(list::add)
 
         val da = 2 * PI / divisions
         var d = 1
         while (d < divisions / 4) {
             val radius = cos(da * d) * radius
-            CircleRenderer(radius, (2 * PI / asin(particleSpacing / radius)).toInt())
+            Renderer.circle(radius, (2 * PI / asin(particleSpacing / radius)).toInt())
                 .map { it.add(Vector(.0, .0 + sin(da * d) * this.radius, .0)) }
                 .forEach {
                     list.add(it)

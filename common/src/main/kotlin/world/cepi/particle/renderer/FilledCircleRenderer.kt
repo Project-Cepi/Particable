@@ -7,8 +7,8 @@ import kotlin.math.asin
 
 data class FilledCircleRenderer(
     val radius: Double,
-    val innerDivisions: Int,
-    val particleSpacing: Double
+    val innerDivisions: Int = (radius * 10).toInt(),
+    val particleSpacing: Double = .1
 ) : Renderer {
     private val iterable = run {
         val smallestR = radius / innerDivisions

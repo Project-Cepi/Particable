@@ -2,12 +2,13 @@ package world.cepi.particle.renderer
 
 import net.minestom.server.utils.Vector
 import kotlin.math.PI
+import kotlin.math.asin
 import kotlin.math.cos
 import kotlin.math.sin
 
 data class CircleRenderer(
     val radius: Double,
-    val divisions: Int
+    val divisions: Int = (2 * PI / asin(0.1 / radius)).toInt()
 ) : Renderer {
     private val step = (2 * PI / divisions)
     private val radians = DoubleArray(divisions) { i -> step * i }
