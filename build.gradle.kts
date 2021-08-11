@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.5.10"
+    kotlin("jvm") version "1.5.21"
     java
     `maven-publish`
 }
@@ -18,6 +18,8 @@ allprojects {
     dependencies {
         // Use the Kotlin JDK 8 standard library.
         implementation(kotlin("stdlib"))
+
+        implementation(kotlin("reflect"))
 
         // Use the JUpiter test library.
         testImplementation("org.junit.jupiter:junit-jupiter:5.7.2")

@@ -12,4 +12,8 @@ javafx {
 
 dependencies {
     implementation("no.tornado:tornadofx:1.7.17")
+
+    implementation(kotlin("reflect"))
+
+    implementation(project(":common"))
 }
