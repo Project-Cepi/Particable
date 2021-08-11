@@ -16,9 +16,9 @@ data class CircleRenderer(
     private val xs = DoubleArray(divisions) { i -> cos(radians[i]) * radius }
     private val ys = DoubleArray(divisions) { i -> sin(radians[i]) * radius }
 
-    override fun iterator(): kotlin.collections.Iterator<Position> = Iterator()
+    override fun iterator(): Iterator<Position> = ParticleIterator()
 
-    inner class Iterator : kotlin.collections.Iterator<Position> {
+    inner class ParticleIterator : Iterator<Position> {
         private var d = 0
 
         override fun hasNext() = d < divisions

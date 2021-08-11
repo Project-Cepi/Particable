@@ -13,9 +13,9 @@ class Positions(private val start: Position, private val end: Position, private 
         addVec = v
     }
 
-    override fun iterator(): kotlin.collections.Iterator<Position> = Iterator()
+    override fun iterator(): Iterator<Position> = PositionIterator()
 
-    inner class Iterator : kotlin.collections.Iterator<Position> {
+    inner class PositionIterator : Iterator<Position> {
         private val current = Position()
         init {
             current.set(start)
