@@ -7,7 +7,6 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 data class CircleRenderer(
-    val center: Position,
     val radius: Double,
     val axis: Axis,
     val divisions: Int
@@ -30,7 +29,6 @@ data class CircleRenderer(
                 Axis.XZ -> Position(xs[d], .0, ys[d])
                 Axis.YZ -> Position(.0, xs[d], ys[d])
             }
-            res.add(center)
             ++d
             return res
         }

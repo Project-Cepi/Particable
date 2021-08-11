@@ -9,7 +9,6 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 data class SphereRenderer(
-    val center: Position,
     val radius: Double,
     val particleSpacing: Double
 ) : Renderer {
@@ -17,24 +16,24 @@ data class SphereRenderer(
         val list = LinkedList<Position>()
         val divisions = (2 * PI / asin(particleSpacing / radius)).toInt()
 
-        CircleRenderer(center, radius, CircleRenderer.Axis.XZ, divisions).forEach(list::add)
+        CircleRenderer(radius, CircleRenderer.Axis.XZ, divisions).forEach(list::add)
 
         val da = 2 * PI / divisions
         var d = 1
         while (d < divisions / 4) {
             val r = cos(da * d) * radius
             CircleRenderer(
-                Position(center.x, center.y + sin(da * d) * radius, center.z),
+//                Position(.0, .0 + sin(da * d) * radius, .0),
                 r, CircleRenderer.Axis.XZ, (2 * PI / asin(particleSpacing / r)).toInt()
             ).forEach {
                 list.add(it)
-                list.add(Position(it.x, center.y - (it.y - center.y), it.z))
+                list.add(Position(it.x, .0 - (it.y), it.z))
             }
             ++d
         }
 
-        list.add(Position(center.x, center.y + radius, center.z))
-        list.add(Position(center.x, center.y - radius, center.z))
+        list.add(Position(.0, .0 + radius, .0))
+        list.add(Position(.0, .0 - radius, .0))
 
         list
     }

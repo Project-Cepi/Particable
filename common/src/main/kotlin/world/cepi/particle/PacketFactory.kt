@@ -2,15 +2,16 @@
 
 package world.cepi.particle
 
-import it.unimi.dsi.fastutil.objects.Object2ShortArrayMap
-import it.unimi.dsi.fastutil.objects.Object2ShortMap
-import net.kyori.adventure.key.Key
 import net.minestom.server.network.packet.server.play.ParticlePacket
 import net.minestom.server.utils.Position
 import net.minestom.server.utils.binary.BinaryWriter
+import net.minestom.server.particle.Particle as MinestomParticle
 import java.util.*
 
 object PacketFactory {
+
+    private val ids = MinestomParticle.values().associate { it.namespaceID to it.id }
+
     fun createParticlePackets(particle: Particle<*, *>, renderer: Particle.Renderer): Collection<ParticlePacket> =
         if (renderer is Renderer) renderer.map { createParticlePacket(particle, it) }
         else emptyList()
@@ -20,7 +21,7 @@ object PacketFactory {
 
     fun createParticlePacket(particle: Particle<*, *>, renderer: Position): ParticlePacket {
         val packet = ParticlePacket()
-        packet.particleId = ids.getShort(particle.name).toInt()
+        packet.particleId = (ids[particle.name] ?: 0).toInt()
         packet.longDistance = particle.longDistance
 
         packet.x = renderer.x
@@ -45,11 +46,5 @@ object PacketFactory {
         }
 
         return packet
-    }
-}
-
-private val ids: Object2ShortMap<Key> = Object2ShortArrayMap<Key>(net.minestom.server.particle.Particle.values().size).apply {
-    for (v in net.minestom.server.particle.Particle.values()) {
-        put(v.namespaceID, v.id)
     }
 }

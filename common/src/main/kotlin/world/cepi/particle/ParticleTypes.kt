@@ -10,15 +10,14 @@ import world.cepi.particle.extra.*
 import java.util.function.Consumer
 import net.minestom.server.particle.Particle as MinestomParticle
 
-internal sealed class ParticleTypes <D : Particle.Data, E : Particle.ExtraData?>
-constructor(private val minestomParticle: MinestomParticle) :
+internal sealed class ParticleTypes <D : Particle.Data, E : Particle.ExtraData?>(private val minestomParticle: MinestomParticle) :
     Particle.Type<D, E>, Keyed by minestomParticle {
 
     internal class Default(minestomParticle: MinestomParticle) :
-        ParticleTypes<OffsetAndSpeed, Nothing?>(minestomParticle)
+        ParticleTypes<OffsetAndSpeed, Nothing>(minestomParticle)
 
     internal class Colored(minestomParticle: MinestomParticle) :
-        ParticleTypes<Color, Nothing?>(minestomParticle)
+        ParticleTypes<Color, Nothing>(minestomParticle)
 
     internal fun interface BinaryData : Particle.ExtraData, Consumer<BinaryWriter>
 

@@ -12,13 +12,13 @@ data class DustTransition(
     val toBlue: Float,
     val scale: Float
 ) : ParticleTypes.BinaryData {
-    override fun accept(t: BinaryWriter) {
-        t.writeFloat(fromRed)
-        t.writeFloat(fromGreen)
-        t.writeFloat(fromBlue)
-        t.writeFloat(scale)
-        t.writeFloat(toRed)
-        t.writeFloat(toGreen)
-        t.writeFloat(toBlue)
+    override fun accept(binaryWriter: BinaryWriter) {
+        binaryWriter.writeFloat(fromRed)
+        binaryWriter.writeFloat(fromGreen)
+        binaryWriter.writeFloat(fromBlue)
+        binaryWriter.writeFloat(scale)
+        binaryWriter.writeFloat(toRed)
+        binaryWriter.writeFloat(toGreen)
+        binaryWriter.writeFloat(toBlue)
     }
 }

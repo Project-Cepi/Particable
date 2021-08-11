@@ -35,19 +35,19 @@ fun <D : Particle.Data, E : Particle.ExtraData?> ForwardingAudience.showParticle
 }
 
 fun <D : Particle.Data, E : Particle.ExtraData?> PacketGroupingAudience.showParticle(particle: Particle<D, E>, renderer: Particle.Renderer) {
-    createParticlePackets(particle, renderer).forEach(this::sendGroupedPacket)
+    PacketFactory.createParticlePackets(particle, renderer).forEach(this::sendGroupedPacket)
 }
 
 fun <D : Particle.Data, E : Particle.ExtraData?> PacketGroupingAudience.showParticle(particle: Particle<D, E>, renderer: Position) {
-    sendGroupedPacket(createParticlePacket(particle, renderer))
+    sendGroupedPacket(PacketFactory.createParticlePacket(particle, renderer))
 }
 
 fun <D : Particle.Data, E : Particle.ExtraData?> Player.showParticle(particle: Particle<D, E>, renderer: Particle.Renderer) {
-    createParticlePackets(particle, renderer).forEach(playerConnection::sendPacket)
+    PacketFactory.createParticlePackets(particle, renderer).forEach(playerConnection::sendPacket)
 }
 
 fun <D : Particle.Data, E : Particle.ExtraData?> Player.showParticle(particle: Particle<D, E>, renderer: Position) {
-    playerConnection.sendPacket(createParticlePacket(particle, renderer))
+    playerConnection.sendPacket(PacketFactory.createParticlePacket(particle, renderer))
 }
 
 fun <D : Particle.Data, E : Particle.ExtraData?> ForwardingAudience.Single.showParticle(particle: Particle<D, E>, renderer: Particle.Renderer) {
