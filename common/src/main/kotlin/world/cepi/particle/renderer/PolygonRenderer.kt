@@ -1,7 +1,6 @@
 package world.cepi.particle.renderer
 
 import net.minestom.server.utils.Vector
-import world.cepi.particle.Renderer
 import world.cepi.particle.util.Vectors
 import java.util.*
 

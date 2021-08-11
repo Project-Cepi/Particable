@@ -5,6 +5,7 @@ package world.cepi.particle
 import net.minestom.server.network.packet.server.play.ParticlePacket
 import net.minestom.server.utils.Vector
 import net.minestom.server.utils.binary.BinaryWriter
+import world.cepi.particle.renderer.Renderer
 import net.minestom.server.particle.Particle as MinestomParticle
 import java.util.*
 

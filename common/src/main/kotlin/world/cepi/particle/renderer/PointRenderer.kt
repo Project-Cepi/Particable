@@ -1,7 +1,6 @@
 package world.cepi.particle.renderer
 
 import net.minestom.server.utils.Vector
-import world.cepi.particle.Renderer
 
 object PointRenderer : Renderer {
     override fun iterator(): Iterator<Vector> = VectorIterator()

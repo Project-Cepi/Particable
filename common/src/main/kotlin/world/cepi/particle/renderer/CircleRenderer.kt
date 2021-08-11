@@ -1,7 +1,6 @@
 package world.cepi.particle.renderer
 
 import net.minestom.server.utils.Vector
-import world.cepi.particle.Renderer
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin

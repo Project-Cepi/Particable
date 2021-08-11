@@ -1,7 +1,6 @@
 package world.cepi.particle.renderer
 
 import net.minestom.server.utils.Vector
-import world.cepi.particle.Renderer
 import java.util.*
 import kotlin.math.PI
 import kotlin.math.asin
@@ -16,13 +15,13 @@ data class SphereRenderer(
         val list = LinkedList<Vector>()
         val divisions = (2 * PI / asin(particleSpacing / radius)).toInt()
 
-        CircleRenderer(radius, CircleRenderer.Axis.XZ, divisions).forEach(list::add)
+        CircleRenderer(radius, divisions).forEach(list::add)
 
         val da = 2 * PI / divisions
         var d = 1
         while (d < divisions / 4) {
             val radius = cos(da * d) * radius
-            CircleRenderer(radius, CircleRenderer.Axis.XZ, (2 * PI / asin(particleSpacing / radius)).toInt())
+            CircleRenderer(radius, (2 * PI / asin(particleSpacing / radius)).toInt())
                 .map { it.add(Vector(.0, .0 + sin(da * d) * this.radius, .0)) }
                 .forEach {
                     list.add(it)
