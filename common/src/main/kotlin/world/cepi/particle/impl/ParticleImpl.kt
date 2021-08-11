@@ -5,7 +5,7 @@ import net.kyori.examination.string.StringExaminer
 import world.cepi.particle.Particle
 import java.util.stream.Stream
 
-internal abstract class ParticleImpl<D : Particle.Data, E : Particle.ExtraData?>(
+internal abstract class ParticleImpl<D : Particle.Data, E : Particle.ExtraData>(
     override val longDistance: Boolean,
     override val particleData: D,
     override val extraData: E
@@ -37,7 +37,7 @@ internal abstract class ParticleImpl<D : Particle.Data, E : Particle.ExtraData?>
     override fun hashCode(): Int {
         var result = count
         result = 31 * result + particleData.hashCode()
-        result = 31 * result + (extraData?.hashCode() ?: 0)
+        result = 31 * result + extraData.hashCode()
         result = 31 * result + longDistance.hashCode()
         return result
     }
