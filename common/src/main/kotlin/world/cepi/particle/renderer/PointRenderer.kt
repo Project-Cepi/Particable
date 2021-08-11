@@ -1,12 +1,12 @@
 package world.cepi.particle.renderer
 
-import net.minestom.server.utils.Position
+import net.minestom.server.utils.Vector
 import world.cepi.particle.Renderer
 
 object PointRenderer : Renderer {
-    override fun iterator(): kotlin.collections.Iterator<Position> = Iterator()
+    override fun iterator(): Iterator<Vector> = VectorIterator()
 
-    private class Iterator : kotlin.collections.Iterator<Position> {
+    private class VectorIterator : Iterator<Vector> {
         private var used = false
 
         override fun hasNext(): Boolean {
@@ -15,6 +15,6 @@ object PointRenderer : Renderer {
             return has
         }
 
-        override fun next(): Position = Position(.0, .0, .0)
+        override fun next(): Vector = Vector(.0, .0, .0)
     }
 }

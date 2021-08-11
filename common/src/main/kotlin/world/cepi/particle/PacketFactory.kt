@@ -3,7 +3,7 @@
 package world.cepi.particle
 
 import net.minestom.server.network.packet.server.play.ParticlePacket
-import net.minestom.server.utils.Position
+import net.minestom.server.utils.Vector
 import net.minestom.server.utils.binary.BinaryWriter
 import net.minestom.server.particle.Particle as MinestomParticle
 import java.util.*
@@ -16,10 +16,10 @@ object PacketFactory {
         if (renderer is Renderer) renderer.map { createParticlePacket(particle, it) }
         else emptyList()
 
-    fun createParticlePackets(particle: Particle<*, *>, renderer: Position): Collection<ParticlePacket> =
+    fun createParticlePackets(particle: Particle<*, *>, renderer: Vector): Collection<ParticlePacket> =
         Collections.singleton(createParticlePacket(particle, renderer))
 
-    fun createParticlePacket(particle: Particle<*, *>, renderer: Position): ParticlePacket {
+    fun createParticlePacket(particle: Particle<*, *>, renderer: Vector): ParticlePacket {
         val packet = ParticlePacket()
         packet.particleId = (ids[particle.name] ?: 0).toInt()
         packet.longDistance = particle.longDistance

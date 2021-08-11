@@ -9,10 +9,10 @@ data class Dust(
     val blue: Float,
     val scale: Float
 ) : ParticleTypes.BinaryData {
-    override fun accept(t: BinaryWriter) {
-        t.writeFloat(red)
-        t.writeFloat(green)
-        t.writeFloat(blue)
-        t.writeFloat(scale)
+    override fun accept(binaryWriter: BinaryWriter) {
+        binaryWriter.writeFloat(red)
+        binaryWriter.writeFloat(green)
+        binaryWriter.writeFloat(blue)
+        binaryWriter.writeFloat(scale)
     }
 }

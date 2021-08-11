@@ -1,10 +1,10 @@
 package world.cepi.particle.renderer
 
-import net.minestom.server.utils.Position
+import net.minestom.server.utils.Vector
 import world.cepi.particle.Renderer
-import world.cepi.particle.util.Positions
+import world.cepi.particle.util.Vectors
 
-data class LineRenderer(val start: Position, val end: Position, val step: Double) : Renderer {
-    private val positions = Positions(start, end, step)
-    override fun iterator() = positions.iterator()
+data class LineRenderer(val start: Vector, val end: Vector, val step: Double) : Renderer {
+    private val vectors = Vectors(start, end, step)
+    override fun iterator() = vectors.iterator()
 }

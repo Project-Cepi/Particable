@@ -1,6 +1,6 @@
 package world.cepi.particle.renderer
 
-import net.minestom.server.utils.Position
+import net.minestom.server.utils.Vector
 import world.cepi.particle.Renderer
 import kotlin.math.PI
 import kotlin.math.cos
@@ -16,18 +16,18 @@ data class CircleRenderer(
     private val xs = DoubleArray(divisions) { i -> cos(radians[i]) * radius }
     private val ys = DoubleArray(divisions) { i -> sin(radians[i]) * radius }
 
-    override fun iterator(): Iterator<Position> = ParticleIterator()
+    override fun iterator(): Iterator<Vector> = ParticleIterator()
 
-    inner class ParticleIterator : Iterator<Position> {
+    inner class ParticleIterator : Iterator<Vector> {
         private var d = 0
 
         override fun hasNext() = d < divisions
 
-        override fun next(): Position {
+        override fun next(): Vector {
             val res = when (axis) {
-                Axis.XY -> Position(xs[d], ys[d], .0)
-                Axis.XZ -> Position(xs[d], .0, ys[d])
-                Axis.YZ -> Position(.0, xs[d], ys[d])
+                Axis.XY -> Vector(xs[d], ys[d], .0)
+                Axis.XZ -> Vector(xs[d], .0, ys[d])
+                Axis.YZ -> Vector(.0, xs[d], ys[d])
             }
             ++d
             return res

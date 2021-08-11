@@ -12,13 +12,13 @@ data class Vibration(
     val endZ: Float,
     val ticks: Int
 ) : ParticleTypes.BinaryData {
-    override fun accept(t: BinaryWriter) {
-        t.writeFloat(startX)
-        t.writeFloat(startY)
-        t.writeFloat(startZ)
-        t.writeFloat(endX)
-        t.writeFloat(endY)
-        t.writeFloat(endZ)
-        t.writeInt(ticks)
+    override fun accept(binaryWriter: BinaryWriter) {
+        binaryWriter.writeFloat(startX)
+        binaryWriter.writeFloat(startY)
+        binaryWriter.writeFloat(startZ)
+        binaryWriter.writeFloat(endX)
+        binaryWriter.writeFloat(endY)
+        binaryWriter.writeFloat(endZ)
+        binaryWriter.writeInt(ticks)
     }
 }

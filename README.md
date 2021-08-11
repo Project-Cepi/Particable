@@ -31,14 +31,14 @@ val particle = Particle.particle(
 ***
 To show the particle, call `Audience.showParticle(Particle, Particle.Renderer)`.
 
-The renderers are methods on the companion of `Renderer`. `Position` is also accepted.
+The renderers are methods on the companion of `Renderer`. `Vector` is also accepted.
 ```kt
-// Show the particle on a single position
-audience.showParticle(particle, position)
+// Show the particle on a single vector
+audience.showParticle(particle, vector)
 // Or
-audience.showParticle(particle, Renderer.point(position))
+audience.showParticle(particle, Renderer.point(vector))
 
 // Render a circle
-audience.showParticle(particle, Renderer.circle(position, 5))
+audience.showParticle(particle, Renderer.circle(vector, 5))
 ```
 For all renderers visit [Renderer.kt](https://github.com/Project-Cepi/Particable/blob/main/Minestom/src/main/kotlin/world/cepi/particle/Renderer.kt)

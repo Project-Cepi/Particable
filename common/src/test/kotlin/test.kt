@@ -1,5 +1,4 @@
 import net.kyori.adventure.audience.Audience
-import net.minestom.server.utils.Position
 import world.cepi.particle.Particle
 import world.cepi.particle.ParticleType
 import world.cepi.particle.Renderer

@@ -1,6 +1,6 @@
 package world.cepi.particle.renderer
 
-import net.minestom.server.utils.Position
+import net.minestom.server.utils.Vector
 import world.cepi.particle.Renderer
 import java.util.*
 import kotlin.math.PI
@@ -14,7 +14,7 @@ data class FilledCircleRenderer(
 ) : Renderer {
     private val iterable = run {
         val smallestR = radius / innerDivisions
-        val list = LinkedList<Position>()
+        val list = LinkedList<Vector>()
         var d = 0
         while (d < innerDivisions) {
             val radius = smallestR * (d + 1)
@@ -25,5 +25,5 @@ data class FilledCircleRenderer(
         list
     }
 
-    override fun iterator(): Iterator<Position> = iterable.iterator()
+    override fun iterator(): Iterator<Vector> = iterable.iterator()
 }
