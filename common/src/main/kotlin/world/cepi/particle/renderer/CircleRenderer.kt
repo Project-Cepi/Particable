@@ -8,7 +8,6 @@ import kotlin.math.sin
 
 data class CircleRenderer(
     val radius: Double,
-    val axis: Axis,
     val divisions: Int
 ) : Renderer {
     private val step = (2 * PI / divisions)
@@ -23,19 +22,7 @@ data class CircleRenderer(
 
         override fun hasNext() = d < divisions
 
-        override fun next(): Vector {
-            val res = when (axis) {
-                Axis.XY -> Vector(xs[d], ys[d], .0)
-                Axis.XZ -> Vector(xs[d], .0, ys[d])
-                Axis.YZ -> Vector(.0, xs[d], ys[d])
-            }
-            ++d
-            return res
-        }
-    }
-
-    enum class Axis {
-        XY, XZ, YZ
+        override fun next() = Vector(xs[d], .0, ys[d]).also { d++ }
     }
 }
 
