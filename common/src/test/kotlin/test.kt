@@ -11,5 +11,5 @@ fun main() {
     val sphereRenderer = SphereRenderer(1.0, 0.5)
     sphereRenderer.forEach { println(it) }
     (object : Audience {})
-        .showParticle(Particle.particle(ParticleType.AMBIENT_ENTITY_EFFECT, 5, Color(1f, 0f, 0f, 1f)), Renderer.point())
+        .showParticle(Particle.particle(ParticleType.AMBIENT_ENTITY_EFFECT, 5, Color(1f, 0f, 0f)), Renderer.point())
 }

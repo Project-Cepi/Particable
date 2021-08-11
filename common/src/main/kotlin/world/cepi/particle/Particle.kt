@@ -9,39 +9,39 @@ import net.kyori.examination.Examinable
 import org.jetbrains.annotations.ApiStatus.NonExtendable
 
 @NonExtendable
-interface Particle<D : Particle.Data, E : Particle.ExtraData?> : Examinable {
+interface Particle<D : Particle.Data, E : Particle.ExtraData> : Examinable {
     companion object {
-        fun <D : Data, E : ExtraData?> particle(name: Key, count: Int, data: D, extraData: E, longDistance: Boolean = false): Particle<D, E> =
+        fun <D : Data, E : ExtraData> particle(name: Key, count: Int, data: D, extraData: E, longDistance: Boolean = false): Particle<D, E> =
             object : ParticleImpl<D, E>(longDistance, data, extraData) {
                 override val name = name
                 override val count = count
             }
 
-        fun <D : Data, E : ExtraData?> particle(type: Type<D, E>, count: Int, data: D, extraData: E, longDistance: Boolean = false): Particle<D, E> =
+        fun <D : Data, E : ExtraData> particle(type: Type<D, E>, count: Int, data: D, extraData: E, longDistance: Boolean = false): Particle<D, E> =
             particle(type.key(), count, data, extraData, longDistance)
 
-        fun <D : Data, E : ExtraData?> particle(type: () -> Type<D, E>, count: Int, data: D, extraData: E, longDistance: Boolean = false): Particle<D, E> =
+        fun <D : Data, E : ExtraData> particle(type: () -> Type<D, E>, count: Int, data: D, extraData: E, longDistance: Boolean = false): Particle<D, E> =
             object : ParticleImpl<D, E>(longDistance, data, extraData) {
                 override val name get() = type().key()
                 override val count = count
             }
 
-        fun <D : Data> particle(type: Type<D, Nothing?>, count: Int, data: D, longDistance: Boolean = false): Particle<D, Nothing?> =
-            particle(type.key(), count, data, null, longDistance)
+        fun <D : Data> particle(type: Type<D, Nothing>, count: Int, data: D, longDistance: Boolean = false): Particle<D, Nothing> =
+            particle(type.key(), count, data, Nothing, longDistance)
 
-        fun <D : Data> particle(type: () -> Type<D, Nothing?>, count: Int, data: D, longDistance: Boolean = false): Particle<D, Nothing> =
+        fun <D : Data> particle(type: () -> Type<D, Nothing>, count: Int, data: D, longDistance: Boolean = false): Particle<D, Nothing> =
             object : ParticleImpl<D, Nothing>(longDistance, data, Nothing) {
                 override val name get() = type().key()
                 override val count = count
             }
 
-        fun <D : Data, E : ExtraData?> particle(type: Type<D, E>, count: () -> Int, data: D, extraData: E, longDistance: Boolean = false): Particle<D, E> =
+        fun <D : Data, E : ExtraData> particle(type: Type<D, E>, count: () -> Int, data: D, extraData: E, longDistance: Boolean = false): Particle<D, E> =
             object : ParticleImpl<D, E>(longDistance, data, extraData) {
                 override val name = type.key()
                 override val count get() = count()
             }
 
-        fun <D : Data, E : ExtraData?> particle(type: () -> Type<D, E>, count: () -> Int, data: D, extraData: E, longDistance: Boolean = false): Particle<D, E> =
+        fun <D : Data, E : ExtraData> particle(type: () -> Type<D, E>, count: () -> Int, data: D, extraData: E, longDistance: Boolean = false): Particle<D, E> =
             object : ParticleImpl<D, E>(longDistance, data, extraData) {
                 override val name get() = type().key()
                 override val count get() = count()
