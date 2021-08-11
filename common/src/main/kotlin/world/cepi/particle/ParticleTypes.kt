@@ -7,7 +7,6 @@ import net.minestom.server.utils.binary.BinaryWriter
 import world.cepi.particle.data.Color
 import world.cepi.particle.data.OffsetAndSpeed
 import world.cepi.particle.extra.*
-import world.cepi.particle.extra.Nothing
 import java.util.function.Consumer
 import net.minestom.server.particle.Particle as MinestomParticle
 

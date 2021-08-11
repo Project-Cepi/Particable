@@ -8,7 +8,7 @@ import world.cepi.particle.ParticleTypes
 
 @JvmInline
 value class Item(val itemStack: ItemStack) : ParticleTypes.BinaryData {
-    override fun accept(t: BinaryWriter) {
-        t.writeItemStack(itemStack)
+    override fun accept(binaryWriter: BinaryWriter) {
+        binaryWriter.writeItemStack(itemStack)
     }
 }
