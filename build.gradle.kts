@@ -28,14 +28,10 @@ allprojects {
     }
 
     java {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_16
+        targetCompatibility = JavaVersion.VERSION_16
     }
 
     val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
-    compileKotlin.kotlinOptions.jvmTarget = JavaVersion.VERSION_11.toString()
-
-    compileKotlin.kotlinOptions {
-        freeCompilerArgs = listOf("-Xuse-experimental=kotlin.MultiPlatform")
-    }
+    compileKotlin.kotlinOptions.jvmTarget = JavaVersion.VERSION_16.toString()
 }
