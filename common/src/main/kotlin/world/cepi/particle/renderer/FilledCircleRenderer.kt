@@ -7,7 +7,6 @@ import kotlin.math.PI
 import kotlin.math.asin
 
 data class FilledCircleRenderer(
-    val center: Position,
     val radius: Double,
     val axis: CircleRenderer.Axis,
     val innerDivisions: Int,
@@ -18,8 +17,8 @@ data class FilledCircleRenderer(
         val list = LinkedList<Position>()
         var d = 0
         while (d < innerDivisions) {
-            val r = smallestR * (d + 1)
-            CircleRenderer(center, r, axis, (2 * PI / asin(particleSpacing / r)).toInt())
+            val radius = smallestR * (d + 1)
+            CircleRenderer(radius, axis, (2 * PI / asin(particleSpacing / radius)).toInt())
                 .forEach(list::add)
             ++d
         }

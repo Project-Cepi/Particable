@@ -21,14 +21,13 @@ data class SphereRenderer(
         val da = 2 * PI / divisions
         var d = 1
         while (d < divisions / 4) {
-            val r = cos(da * d) * radius
-            CircleRenderer(
-//                Position(.0, .0 + sin(da * d) * radius, .0),
-                r, CircleRenderer.Axis.XZ, (2 * PI / asin(particleSpacing / r)).toInt()
-            ).forEach {
-                list.add(it)
-                list.add(Position(it.x, .0 - (it.y), it.z))
-            }
+            val radius = cos(da * d) * radius
+            CircleRenderer(radius, CircleRenderer.Axis.XZ, (2 * PI / asin(particleSpacing / radius)).toInt())
+                .map { it.add(Position(.0, .0 + sin(da * d) * this.radius, .0)) }
+                .forEach {
+                    list.add(it)
+                    list.add(Position(it.x, .0 - (it.y), it.z))
+                }
             ++d
         }
 
