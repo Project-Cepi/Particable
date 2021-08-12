@@ -7,9 +7,9 @@ import net.kyori.adventure.key.Key
 import net.kyori.adventure.key.Keyed
 import net.kyori.examination.Examinable
 import net.minestom.server.utils.Vector
-import org.jetbrains.annotations.ApiStatus.NonExtendable
+import org.jetbrains.annotations.ApiStatus
 
-@NonExtendable
+@ApiStatus.NonExtendable
 interface Particle<D : Particle.Data, E : Particle.ExtraData> : Examinable {
     companion object {
         fun <D : Data, E : ExtraData> particle(name: Key, count: Int, data: D, extraData: E, longDistance: Boolean = false): Particle<D, E> =
