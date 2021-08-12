@@ -36,9 +36,9 @@ class ThreeDimensionalVisualizer : View() {
         val camera: PerspectiveCamera?
 
         val subScene = SubScene(Group().apply {
-            val testBox = Box(5.0, 5.0, 5.0).attachTo(this)
-            testBox.material = PhongMaterial(Color.RED)
-            testBox.drawMode = DrawMode.LINE
+            val testBox = Box(1.0, 1.0, 1.0).attachTo(this)
+            testBox.material = PhongMaterial(Color(1.0, .0, .0, .5))
+            testBox.drawMode = DrawMode.FILL
 
             // Create and position camera
 
