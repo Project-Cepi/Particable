@@ -9,7 +9,7 @@ import kotlin.math.sin
 
 data class SphereRenderer(
     val radius: Double,
-    val particleSpacing: Double = .1
+    val particleSpacing: Double = .2
 ) : Renderer {
     private val iterable = run {
         val list = LinkedList<Vector>()

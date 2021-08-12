@@ -1,8 +1,6 @@
 package world.cepi.particle
 
 import javafx.beans.property.SimpleStringProperty
-import javafx.event.EventHandler
-import javafx.geometry.Point3D
 import javafx.scene.Group
 import javafx.scene.paint.Color
 import javafx.scene.shape.Box
@@ -15,14 +13,13 @@ import javafx.scene.transform.Rotate
 import javafx.scene.PerspectiveCamera
 import javafx.scene.paint.PhongMaterial
 
-import javafx.scene.shape.DrawMode
 import javafx.scene.SubScene
 import javafx.scene.input.MouseDragEvent
-import javafx.scene.input.MouseEvent
 import javafx.scene.input.ScrollEvent
-import javafx.scene.shape.Circle
-import javafx.scene.shape.Sphere
 import javafx.scene.transform.Scale
+import world.cepi.particle.renderer.CircleRenderer
+import world.cepi.particle.renderer.SphereRenderer
+import java.util.concurrent.ThreadLocalRandom
 
 
 class ParticleVisualizerView : View("Particlable Visualizer") {
@@ -51,19 +48,30 @@ class ThreeDimensionalVisualizer : View() {
         val subScene = SubScene(Group().apply {
 
             Box(.5, .5, .5).attachTo(this).apply {
-                material = PhongMaterial(Color(.0, .0, .0, 1.0))
+                material = PhongMaterial(Color(.0, 1.0, .0, .5))
             }
 
-            Box(1.0, 1.0, 1.0).attachTo(this).apply {
-                material = PhongMaterial(Color(1.0, .0, .0, .5))
+            SphereRenderer(5.0).map {
+                Box(.1, .1, .1).attachTo(this).apply {
+                    material = PhongMaterial(Color(
+                        ThreadLocalRandom.current().nextDouble(0.35, 0.65),
+                        ThreadLocalRandom.current().nextDouble(0.35, 0.65),
+                        ThreadLocalRandom.current().nextDouble(0.35, 0.65),
+                        .4)
+                    )
+
+                    translateXProperty().set(it.x)
+                    translateYProperty().set(it.y)
+                    translateZProperty().set(it.z)
+                }
             }
 
             // Create and position camera
-            camera = Cam().attachTo(this)
+            camera = TransformableCamera().attachTo(this)
             camera.transforms.addAll(
                 Rotate(-20.0, Rotate.Y_AXIS),
                 Rotate(-20.0, Rotate.X_AXIS),
-                Translate(.0, .0, -15.0)
+                Translate(.0, .0, -30.0)
             )
 
             this@vbox.addEventHandler(MouseDragEvent.MOUSE_DRAGGED) { mouseEvent ->
@@ -71,49 +79,43 @@ class ThreeDimensionalVisualizer : View() {
                 val mouseDeltaY = mouseEvent.y - mouseOldY
                 mouseOldX = mouseEvent.x
                 mouseOldY = mouseEvent.y
-                if (mouseEvent.isAltDown && mouseEvent.isShiftDown && mouseEvent.isPrimaryButtonDown) {
-                    camera.rz.angle = camera.rz.angle - mouseDeltaX
-                } else if (mouseEvent.isAltDown && mouseEvent.isPrimaryButtonDown) {
-                    camera.ry.angle = camera.ry.angle - mouseDeltaX
-                    camera.rx.angle = camera.rx.angle + mouseDeltaY
-                } else if (mouseEvent.isAltDown && mouseEvent.isSecondaryButtonDown) {
-                    val scale: Double = camera.s.x
-                    val newScale: Double = scale + mouseDeltaX * 0.01
-                    camera.scaleX = newScale
-                    camera.scaleY = newScale
-                    camera.scaleZ = newScale
-                } else if (mouseEvent.isAltDown && mouseEvent.isMiddleButtonDown) {
-                    camera.t.x = camera.t.x + mouseDeltaX
-                    camera.t.y = camera.t.y + mouseDeltaY
+                if (mouseEvent.isMiddleButtonDown) {
+                    camera.t.x -= mouseDeltaX / .1
+                    camera.t.y -= mouseDeltaY / .1
+                } else if (mouseEvent.isPrimaryButtonDown) {
+                    camera.rotateX.angle += mouseDeltaY / .5
+                    camera.rotateY.angle -= mouseDeltaX / .5
                 }
             }
 
             primaryStage.addEventHandler(ScrollEvent.SCROLL) { event ->
                 // Get how much scroll was done in Y axis.
-                val delta = event.deltaY
+                val delta = -event.deltaY / 300
                 // Add it to the Z-axis location.
-                camera.translateZProperty().set(camera.translateZ + (delta / 100))
+                camera.scaleXProperty().set((camera.scaleX + delta).coerceAtLeast(.2))
+                camera.scaleYProperty().set((camera.scaleY + delta).coerceAtLeast(.2))
+                camera.scaleZProperty().set((camera.scaleZ + delta).coerceAtLeast(.2))
             }
-        }, 300.0, 300.0).attachTo(this)
+        }, 500.0, 500.0).attachTo(this)
         subScene.fill = Color.ALICEBLUE
         subScene.camera = camera
 
     }
 }
 
-internal class Cam : PerspectiveCamera(true) {
+internal class TransformableCamera : PerspectiveCamera(true) {
     var t = Translate()
     var p = Translate()
     var ip = Translate()
-    var rx = Rotate()
-    var ry = Rotate()
-    var rz = Rotate()
+    var rotateX = Rotate()
+    var rotateY = Rotate()
+    var rotateZ = Rotate()
     var s: Scale = Scale()
 
     init {
-        rx.axis = Rotate.X_AXIS
-        ry.axis = Rotate.Y_AXIS
-        rz.axis = Rotate.Z_AXIS
-        transforms.addAll(t, p, rx, rz, ry, s, ip)
+        rotateX.axis = Rotate.X_AXIS
+        rotateY.axis = Rotate.Y_AXIS
+        rotateZ.axis = Rotate.Z_AXIS
+        transforms.addAll(t, p, rotateX, rotateZ, rotateY, s, ip)
     }
 }
