@@ -3,7 +3,6 @@ package world.cepi.particle
 import javafx.beans.binding.Bindings
 import javafx.beans.property.SimpleStringProperty
 import javafx.scene.*
-import javafx.scene.control.Slider
 import javafx.scene.paint.Color
 import javafx.scene.shape.Box
 import tornadofx.*
@@ -14,6 +13,8 @@ import javafx.scene.paint.PhongMaterial
 
 import javafx.scene.input.MouseDragEvent
 import javafx.scene.input.ScrollEvent
+import jfxtras.styles.jmetro.JMetro
+import jfxtras.styles.jmetro.Style
 import world.cepi.particle.renderer.SphereRenderer
 import java.util.concurrent.ThreadLocalRandom
 

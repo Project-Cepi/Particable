@@ -13,6 +13,8 @@ javafx {
 dependencies {
     implementation("no.tornado:tornadofx:1.7.17")
 
+    implementation("org.jfxtras:jmetro:11.6.14")
+
     implementation("com.github.Minestom:Minestom:ccd8bea434")
 
     implementation(kotlin("reflect"))
