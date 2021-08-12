@@ -100,8 +100,6 @@ class ThreeDimensionalVisualizer : View() {
             // Create and position camera
             camera = TransformableCamera().attachTo(this)
             camera.transforms.addAll(
-                Rotate(-20.0, Rotate.Y_AXIS),
-                Rotate(-20.0, Rotate.X_AXIS),
                 Translate(.0, .0, -30.0)
             )
 
@@ -128,22 +126,5 @@ class ThreeDimensionalVisualizer : View() {
         subScene.fill = Color.ALICEBLUE
         subScene.camera = camera
 
-    }
-}
-
-internal class TransformableCamera : PerspectiveCamera(true) {
-    var t = Translate()
-    var p = Translate()
-    var ip = Translate()
-    var rotateX = Rotate()
-    var rotateY = Rotate()
-    var rotateZ = Rotate()
-    var s: Scale = Scale()
-
-    init {
-        rotateX.axis = Rotate.X_AXIS
-        rotateY.axis = Rotate.Y_AXIS
-        rotateZ.axis = Rotate.Z_AXIS
-        transforms.addAll(t, p, rotateX, rotateZ, rotateY, s, ip)
     }
 }
