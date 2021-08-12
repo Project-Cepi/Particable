@@ -1,7 +1,9 @@
 package world.cepi.particle
 
 import javafx.beans.property.SimpleStringProperty
+import javafx.event.EventHandler
 import javafx.scene.Group
+import javafx.scene.Parent
 import javafx.scene.paint.Color
 import javafx.scene.shape.Box
 import tornadofx.*
@@ -26,6 +28,7 @@ class ParticleVisualizerView : View("Particlable Visualizer") {
     override val root = borderpane {
         left<SelectorView>()
         right<ThreeDimensionalVisualizer>()
+        bottom<ThreeDimensionalVisualizerSettings>()
     }
 }
 
@@ -33,6 +36,34 @@ class SelectorView : View() {
     override val root = vbox {
         combobox<String>(SimpleStringProperty("Circle")) {
             items = Renderer::class.sealedSubclasses.map { it.simpleName!!.dropLast("Renderer".length) }.observable()
+        }
+    }
+}
+
+object WorkspaceSettings {
+    var mouseSensitivity = 5.0
+}
+
+class ThreeDimensionalVisualizerSettings : View() {
+    override val root = vbox {
+        label("Visualizer Settings")
+
+        hbox {
+            label("Mouse sensitivity")
+            val slider = slider(0.1, 10, 5) {
+                this.valueProperty().onChange {
+                    WorkspaceSettings.mouseSensitivity = it
+                }
+            }
+            button("Reset to default") {
+                action {
+                    slider.valueProperty().set(5.0)
+                }
+
+                slider.valueProperty().onChange {
+                    isDisable = it == 5.0
+                }
+            }
         }
     }
 }
@@ -79,12 +110,9 @@ class ThreeDimensionalVisualizer : View() {
                 val mouseDeltaY = mouseEvent.y - mouseOldY
                 mouseOldX = mouseEvent.x
                 mouseOldY = mouseEvent.y
-                if (mouseEvent.isMiddleButtonDown) {
-                    camera.t.x -= mouseDeltaX / .1
-                    camera.t.y -= mouseDeltaY / .1
-                } else if (mouseEvent.isPrimaryButtonDown) {
-                    camera.rotateX.angle += mouseDeltaY / .5
-                    camera.rotateY.angle -= mouseDeltaX / .5
+                if (mouseEvent.isPrimaryButtonDown) {
+                    camera.rotateX.angle += mouseDeltaY * WorkspaceSettings.mouseSensitivity
+                    camera.rotateY.angle -= mouseDeltaX * WorkspaceSettings.mouseSensitivity
                 }
             }
 
