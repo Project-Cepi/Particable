@@ -5,7 +5,7 @@ import world.cepi.particle.Particle
 import kotlin.math.PI
 import kotlin.math.asin
 
-sealed interface Renderer : Particle.Renderer, Iterable<Vector> {
+sealed interface Renderer : Particle.Renderer {
     companion object {
         fun point() = PointRenderer
 

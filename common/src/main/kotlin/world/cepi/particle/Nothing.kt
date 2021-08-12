@@ -1,3 +1,3 @@
 package world.cepi.particle
 
-object Nothing: Particle.ExtraData
+object Nothing : Particle.ExtraData
