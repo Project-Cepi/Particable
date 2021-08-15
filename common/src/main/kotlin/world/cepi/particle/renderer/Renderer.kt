@@ -1,28 +1,109 @@
 package world.cepi.particle.renderer
 
+import net.kyori.adventure.audience.Audience
+import net.minestom.server.MinecraftServer
+import net.minestom.server.timer.Task
 import net.minestom.server.utils.Vector
+import net.minestom.server.utils.time.TimeUnit
 import world.cepi.particle.Particle
+import world.cepi.particle.renderer.animation.TransformAnimation
+import world.cepi.particle.renderer.shape.*
+import world.cepi.particle.renderer.transform.VectorTransform
+import world.cepi.particle.showParticle
+import java.time.Duration
+import java.time.temporal.TemporalUnit
+import java.util.function.UnaryOperator
 import kotlin.math.PI
 import kotlin.math.asin
 
-sealed interface Renderer : Particle.Renderer {
+class Renderer internal constructor() : Particle.Renderer {
     companion object {
-        fun point() = PointRenderer
+        fun point() = Renderer().shape(PointRenderer)
 
-        fun line(start: Vector, end: Vector, step: Double = 0.1) = LineRenderer(start, end, step)
+        fun line(vector: Vector, step: Double = 0.1) = Renderer().shape(LineRenderer(vector, step))
 
-        fun points(points: Iterable<Vector>) = PointsRenderer(points)
-        fun points(vararg points: Vector) = PointsRenderer(points.asIterable())
+        fun points(points: Iterable<Vector>) = Renderer().shape(PointsRenderer(points))
+        fun points(vararg points: Vector) = Renderer().shape(PointsRenderer(points.asIterable()))
 
-        fun polygon(points: Iterable<Vector>, step: Double = 0.1) = PolygonRenderer(points, step)
-        fun polygon(vararg points: Vector,  step: Double = 0.1) = PolygonRenderer(points.asIterable(), step)
+        fun polygon(points: Iterable<Vector>, step: Double = 0.1) = Renderer().shape(PolygonRenderer(points, step))
+        fun polygon(vararg points: Vector,  step: Double = 0.1) = Renderer().shape(PolygonRenderer(points.asIterable(), step))
 
         fun circle(radius: Double, divisions: Int = (2 * PI / asin(0.1 / radius)).toInt()) =
-            CircleRenderer(radius, divisions)
+            Renderer().shape(CircleRenderer(radius, divisions))
 
         fun filledCircle(radius: Double, innerDivisions: Int = (radius * 10).toInt(), particleSpacing: Double = 0.1) =
-            FilledCircleRenderer(radius, innerDivisions, particleSpacing)
+            Renderer().shape(FilledCircleRenderer(radius, innerDivisions, particleSpacing))
 
-        fun sphere(radius: Double, particleSpacing: Double = 0.1) = SphereRenderer(radius, particleSpacing)
+        fun sphere(radius: Double, particleSpacing: Double = 0.1) = Renderer().shape(SphereRenderer(radius, particleSpacing))
     }
+
+    private lateinit var shape: Shape
+
+    private var transform: Transform? = null
+
+    private var animation: Animation? = null
+
+    private var repeat = Duration.ZERO
+
+    fun shape(shape: Shape) = apply { this.shape = shape }
+
+    fun transform(x: Double, y: Double, z: Double) = apply { transform = VectorTransform(Vector(x, y, z)) }
+
+    fun animate(repeat: Duration, animation: Animator.(Int) -> Unit) = apply {
+        this.animation = buildTransformAnimation(animation)
+        this.repeat = repeat
+    }
+
+    fun animatePerParticle(repeat: Duration, animation: Animator.(Int, Float) -> Unit) = apply {
+        this.animation = buildPerParticleAnimation(animation)
+        this.repeat = repeat
+    }
+
+    fun renderOnce(particle: Particle<*, *>, audience: Audience) = audience.showParticle(particle, this)
+
+    fun startRender(particle: Particle<*, *>, audience: Audience, delay: Duration = Duration.ZERO): Task {
+        return (if (animation is TransformAnimation) {
+            var i = 0
+            MinecraftServer.getSchedulerManager().buildTask {
+                audience.showParticle(particle, Renderer().apply {
+                    this@apply.shape = this@Renderer.shape
+                    this@apply.transform = Transform {
+                        (this@Renderer.animation as TransformAnimation)
+                            .invoke(this@Renderer.transform?.apply(it) ?: it, i, 0f)
+                    }
+                })
+                ++i
+            }
+        } else if (animation != null) {
+            val count = shape.count.toFloat()
+            MinecraftServer.getSchedulerManager().buildTask {
+                for ((i, v) in shape.iterator().withIndex()) {
+                    audience.showParticle(particle, animation!!.invoke(transform?.apply(v) ?: v, i, i / count))
+                }
+            }
+        } else MinecraftServer.getSchedulerManager().buildTask {
+            audience.showParticle(particle, this)
+        }).delay(delay).repeat(repeat).schedule()
+    }
+
+    override fun iterator(): Iterator<Vector> {
+        val it = shape.iterator()
+        return object : Iterator<Vector> {
+            override fun hasNext(): Boolean = it.hasNext()
+
+            override fun next(): Vector = it.next().let { v -> transform?.apply(v) ?: v }
+        }
+    }
+
+    abstract class Shape : Iterable<Vector> {
+        val count = run {
+            var i = 0
+            for (_0 in iterator()) ++i
+            i
+        }
+    }
+
+    fun interface Transform : UnaryOperator<Vector>
+
+    fun interface Animation : (Vector, Int, Float) -> Vector
 }

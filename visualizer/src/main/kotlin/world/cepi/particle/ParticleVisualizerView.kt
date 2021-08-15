@@ -13,9 +13,7 @@ import javafx.scene.paint.PhongMaterial
 
 import javafx.scene.input.MouseDragEvent
 import javafx.scene.input.ScrollEvent
-import jfxtras.styles.jmetro.JMetro
-import jfxtras.styles.jmetro.Style
-import world.cepi.particle.renderer.SphereRenderer
+import world.cepi.particle.renderer.shape.SphereRenderer
 import java.util.concurrent.ThreadLocalRandom
 
 class ParticleVisualizerView : View("Particlable Visualizer") {

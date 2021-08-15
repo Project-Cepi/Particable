@@ -32,6 +32,10 @@ class Vectors(private val start: Vector, private val end: Vector, private val st
     }
 }
 
+class VectorsBuilder internal constructor(private val start: Vector, private val end: Vector) {
+    infix fun step(step: Double) = Vectors(start, end, step)
+}
+
 private fun Vector.normalizeFast() {
     var x = lengthSquared()
 
