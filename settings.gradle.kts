@@ -1,5 +1,5 @@
-rootProject.name = "ParticleAPI"
+rootProject.name = "Particlable"
 
 include(":common")
-include(":demo")
+include(":extension")
 include(":visualizer")
