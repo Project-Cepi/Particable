@@ -1,42 +1,38 @@
 package world.cepi.particle.util
 
-import net.minestom.server.utils.Vector
+import net.minestom.server.coordinate.Vec
 
-class Vectors(private val start: Vector, private val end: Vector, private val step: Double) : Iterable<Vector> {
+class Vectors(private val start: Vec, private val end: Vec, private val step: Double) : Iterable<Vec> {
     private val distSqr = end.distanceSquared(start)
-    private val addVec: Vector
-    init {
-        val v = Vector(end.x - start.x, end.y - start.y, end.z - start.z)
-        v.normalizeFast()
-        v.multiply(step)
-        addVec = v
-    }
+    private val addVec = Vec(end.x() - start.x(), end.y() - start.y(), end.z() - start.z())
+        .normalizeFast()
+        .mul(step)
 
-    override fun iterator(): Iterator<Vector> = VectorIterator()
+    override fun iterator(): Iterator<Vec> = VectorIterator()
 
-    inner class VectorIterator : Iterator<Vector> {
-        private val current = start.clone()
+    inner class VectorIterator : Iterator<Vec> {
+        private var current = start
         private var currentDist = .0
-        private inline val currentDistSqr get() = currentDist * currentDist
+        private val currentDistSqr get() = currentDist * currentDist
         private var ended = false
 
         override fun hasNext(): Boolean = !ended
 
-        override fun next(): Vector {
+        override fun next(): Vec {
             currentDist += step
             if (currentDistSqr != distSqr && currentDistSqr > distSqr) ended = true
             if (ended) return end
-            current.add(addVec.x, addVec.y, addVec.z)
-            return current.clone()
+            current = current.add(addVec.x(), addVec.y(), addVec.z())
+            return current
         }
     }
 }
 
-class VectorsBuilder internal constructor(private val start: Vector, private val end: Vector) {
+class VectorsBuilder internal constructor(private val start: Vec, private val end: Vec) {
     infix fun step(step: Double) = Vectors(start, end, step)
 }
 
-private fun Vector.normalizeFast() {
+private fun Vec.normalizeFast(): Vec {
     var x = lengthSquared()
 
     // Fast inverse square root
@@ -46,5 +42,5 @@ private fun Vector.normalizeFast() {
     x = Double.fromBits(i)
     x *= (1.5 - xHalf * x * x)
 
-    multiply(x)
+    return mul(x)
 }

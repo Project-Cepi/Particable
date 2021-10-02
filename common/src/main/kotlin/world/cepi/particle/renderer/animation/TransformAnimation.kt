@@ -1,9 +1,9 @@
 package world.cepi.particle.renderer.animation
 
-import net.minestom.server.utils.Vector
+import net.minestom.server.coordinate.Vec
 import world.cepi.particle.renderer.Renderer
 
-class TransformAnimation(private val callback: (Vector, Int) -> Vector) : Renderer.Animation {
-    override fun invoke(vector: Vector, tick: Int, _0: Float): Vector =
+class TransformAnimation(private val callback: (Vec, Int) -> Vec) : Renderer.Animation {
+    override fun invoke(vector: Vec, tick: Int, _0: Float): Vec =
         callback(vector, tick)
 }

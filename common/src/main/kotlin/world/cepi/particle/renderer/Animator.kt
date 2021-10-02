@@ -1,14 +1,14 @@
 package world.cepi.particle.renderer
 
-import net.minestom.server.utils.Vector
+import net.minestom.server.coordinate.Vec
 import world.cepi.particle.renderer.animation.PerParticleAnimation
 import world.cepi.particle.renderer.animation.TransformAnimation
 import world.cepi.particle.util.unaryPlus
 
 @JvmInline
-value class Animator internal constructor(@PublishedApi internal val vector: Vector) {
-    inline fun transform(transform: Vector.() -> Unit) {
-        vector.apply(transform)
+value class Animator internal constructor(@PublishedApi internal val vector: Vec) {
+    inline fun transform(transform: Vec.() -> Vec): Vec {
+        return transform(vector)
     }
 }
 
@@ -20,8 +20,6 @@ internal inline fun buildPerParticleAnimation(crossinline animation: Animator.(I
 
 fun Animator.translate(x: Double, y: Double, z: Double) {
     transform {
-        this.x += x
-        this.y += y
-        this.z += z
+        add(x, y, z)
     }
 }

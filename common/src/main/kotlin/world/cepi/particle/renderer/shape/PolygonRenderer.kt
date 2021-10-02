@@ -1,19 +1,19 @@
 package world.cepi.particle.renderer.shape
 
-import net.minestom.server.utils.Vector
+import net.minestom.server.coordinate.Vec
 import world.cepi.particle.renderer.Renderer
 import world.cepi.particle.util.Vectors
 import java.util.*
 
-data class PolygonRenderer(val vectors: Iterable<Vector>, val step: Double = .1) : Renderer.Shape() {
-    private val iterable: Iterable<Vector> = run {
+data class PolygonRenderer(val vectors: Iterable<Vec>, val step: Double = .1) : Renderer.Shape() {
+    private val iterable: Iterable<Vec> = run {
         val i0 = vectors.iterator()
-        if (!i0.hasNext()) return@run emptySet<Vector>()
+        if (!i0.hasNext()) return@run emptySet<Vec>()
         val p0 = i0.next()
         if (!i0.hasNext()) return@run Collections.singleton(p0)
         val i1 = vectors.iterator()
 
-        val list = LinkedList<Vector>()
+        val list = LinkedList<Vec>()
         while (i0.hasNext()) {
             Vectors(i1.next(), i0.next(), step).forEach(list::add)
         }
@@ -22,5 +22,5 @@ data class PolygonRenderer(val vectors: Iterable<Vector>, val step: Double = .1)
         list
     }
 
-    override fun iterator(): Iterator<Vector> = iterable.iterator()
+    override fun iterator(): Iterator<Vec> = iterable.iterator()
 }

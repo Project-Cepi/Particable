@@ -6,7 +6,7 @@ import world.cepi.particle.impl.ParticleImpl
 import net.kyori.adventure.key.Key
 import net.kyori.adventure.key.Keyed
 import net.kyori.examination.Examinable
-import net.minestom.server.utils.Vector
+import net.minestom.server.coordinate.Vec
 import org.jetbrains.annotations.ApiStatus
 
 @ApiStatus.NonExtendable
@@ -70,5 +70,5 @@ interface Particle<D : Particle.Data, E : Particle.ExtraData> : Examinable {
 
     interface ExtraData : Examinable
 
-    interface Renderer : Iterable<Vector>
+    interface Renderer : Iterable<Vec>
 }

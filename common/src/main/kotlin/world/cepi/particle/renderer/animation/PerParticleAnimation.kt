@@ -1,7 +1,7 @@
 package world.cepi.particle.renderer.animation
 
-import net.minestom.server.utils.Vector
+import net.minestom.server.coordinate.Vec
 import world.cepi.particle.renderer.Renderer
 
-class PerParticleAnimation(callback: (Vector, Int, Float) -> Vector)
-    : Renderer.Animation, (Vector, Int, Float) -> Vector by callback
+class PerParticleAnimation(callback: (Vec, Int, Float) -> Vec)
+    : Renderer.Animation, (Vec, Int, Float) -> Vec by callback

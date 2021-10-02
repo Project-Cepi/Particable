@@ -1,12 +1,12 @@
 package world.cepi.particle.renderer.shape
 
-import net.minestom.server.utils.Vector
+import net.minestom.server.coordinate.Vec
 import world.cepi.particle.renderer.Renderer
 
-object PointRenderer : Renderer.Shape() {
-    override fun iterator(): Iterator<Vector> = VectorIterator()
+class PointRenderer : Renderer.Shape() {
+    override fun iterator(): Iterator<Vec> = VectorIterator()
 
-    private class VectorIterator : Iterator<Vector> {
+    private class VectorIterator : Iterator<Vec> {
         private var used = false
 
         override fun hasNext(): Boolean {
@@ -15,6 +15,6 @@ object PointRenderer : Renderer.Shape() {
             return has
         }
 
-        override fun next(): Vector = Vector(.0, .0, .0)
+        override fun next(): Vec = Vec(.0, .0, .0)
     }
 }

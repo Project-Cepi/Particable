@@ -2,31 +2,29 @@ package world.cepi.particle.renderer
 
 import net.kyori.adventure.audience.Audience
 import net.minestom.server.MinecraftServer
+import net.minestom.server.coordinate.Vec
 import net.minestom.server.timer.Task
-import net.minestom.server.utils.Vector
-import net.minestom.server.utils.time.TimeUnit
 import world.cepi.particle.Particle
 import world.cepi.particle.renderer.animation.TransformAnimation
 import world.cepi.particle.renderer.shape.*
 import world.cepi.particle.renderer.transform.VectorTransform
 import world.cepi.particle.showParticle
 import java.time.Duration
-import java.time.temporal.TemporalUnit
 import java.util.function.UnaryOperator
 import kotlin.math.PI
 import kotlin.math.asin
 
 class Renderer internal constructor() : Particle.Renderer {
     companion object {
-        fun point() = Renderer().shape(PointRenderer)
+        fun point() = Renderer().shape(PointRenderer())
 
-        fun line(vector: Vector, step: Double = 0.1) = Renderer().shape(LineRenderer(vector, step))
+        fun line(vector: Vec, step: Double = 0.1) = Renderer().shape(LineRenderer(vector, step))
 
-        fun points(points: Iterable<Vector>) = Renderer().shape(PointsRenderer(points))
-        fun points(vararg points: Vector) = Renderer().shape(PointsRenderer(points.asIterable()))
+        fun points(points: Iterable<Vec>) = Renderer().shape(PointsRenderer(points))
+        fun points(vararg points: Vec) = Renderer().shape(PointsRenderer(points.asIterable()))
 
-        fun polygon(points: Iterable<Vector>, step: Double = 0.1) = Renderer().shape(PolygonRenderer(points, step))
-        fun polygon(vararg points: Vector,  step: Double = 0.1) = Renderer().shape(PolygonRenderer(points.asIterable(), step))
+        fun polygon(points: Iterable<Vec>, step: Double = 0.1) = Renderer().shape(PolygonRenderer(points, step))
+        fun polygon(vararg points: Vec,  step: Double = 0.1) = Renderer().shape(PolygonRenderer(points.asIterable(), step))
 
         fun circle(radius: Double, divisions: Int = (2 * PI / asin(0.1 / radius)).toInt()) =
             Renderer().shape(CircleRenderer(radius, divisions))
@@ -47,7 +45,7 @@ class Renderer internal constructor() : Particle.Renderer {
 
     fun shape(shape: Shape) = apply { this.shape = shape }
 
-    fun transform(x: Double, y: Double, z: Double) = apply { transform = VectorTransform(Vector(x, y, z)) }
+    fun transform(x: Double, y: Double, z: Double) = apply { transform = VectorTransform(Vec(x, y, z)) }
 
     fun animate(repeat: Duration, animation: Animator.(Int) -> Unit) = apply {
         this.animation = buildTransformAnimation(animation)
@@ -86,16 +84,16 @@ class Renderer internal constructor() : Particle.Renderer {
         }).delay(delay).repeat(repeat).schedule()
     }
 
-    override fun iterator(): Iterator<Vector> {
+    override fun iterator(): Iterator<Vec> {
         val it = shape.iterator()
-        return object : Iterator<Vector> {
+        return object : Iterator<Vec> {
             override fun hasNext(): Boolean = it.hasNext()
 
-            override fun next(): Vector = it.next().let { v -> transform?.apply(v) ?: v }
+            override fun next(): Vec = it.next().let { v -> transform?.apply(v) ?: v }
         }
     }
 
-    abstract class Shape : Iterable<Vector> {
+    abstract class Shape : Iterable<Vec> {
         val count = run {
             var i = 0
             for (_0 in iterator()) ++i
@@ -103,7 +101,7 @@ class Renderer internal constructor() : Particle.Renderer {
         }
     }
 
-    fun interface Transform : UnaryOperator<Vector>
+    fun interface Transform : UnaryOperator<Vec>
 
-    fun interface Animation : (Vector, Int, Float) -> Vector
+    fun interface Animation : (Vec, Int, Float) -> Vec
 }

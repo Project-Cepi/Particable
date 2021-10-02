@@ -136,9 +136,9 @@ class ThreeDimensionalVisualizer : View() {
                         .4)
                     )
 
-                    translateXProperty().set(it.x)
-                    translateYProperty().set(it.y)
-                    translateZProperty().set(it.z)
+                    translateXProperty().set(it.x())
+                    translateYProperty().set(it.y())
+                    translateZProperty().set(it.z())
                 }
             }
 

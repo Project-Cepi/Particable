@@ -15,7 +15,7 @@ dependencies {
 
     implementation("org.jfxtras:jmetro:11.6.14")
 
-    implementation("com.github.Minestom:Minestom:ccd8bea434")
+    implementation("com.github.Minestom:Minestom:e71c420fa8")
 
     implementation(kotlin("reflect"))
 

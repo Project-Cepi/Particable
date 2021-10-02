@@ -7,6 +7,6 @@ import world.cepi.particle.ParticleTypes
 @JvmInline
 value class BlockState(private val block: Block) : ParticleTypes.BinaryData {
     override fun accept(binaryWriter: BinaryWriter) {
-        binaryWriter.writeVarInt(block.blockId.toInt())
+        binaryWriter.writeVarInt(block.id())
     }
 }

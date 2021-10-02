@@ -1,6 +1,6 @@
 package world.cepi.particle.renderer.shape
 
-import net.minestom.server.utils.Vector
+import net.minestom.server.coordinate.Vec
 import world.cepi.particle.renderer.Renderer
 import java.util.*
 import kotlin.math.PI
@@ -12,30 +12,39 @@ data class SphereRenderer(
     val radius: Double,
     val particleSpacing: Double = .2
 ) : Renderer.Shape() {
-    private val iterable = run {
-        val list = LinkedList<Vector>()
-        val divisions = (2 * PI / asin(particleSpacing / radius)).toInt()
 
-        Renderer.circle(radius, divisions).forEach(list::add)
+    inner class SphereIterator : Iterator<Vec> {
 
-        val da = 2 * PI / divisions
-        var d = 1
-        while (d < divisions / 4) {
-            val radius = cos(da * d) * radius
-            Renderer.circle(radius, (2 * PI / asin(particleSpacing / radius)).toInt())
-                .map { it.add(Vector(.0, .0 + sin(da * d) * this.radius, .0)) }
-                .forEach {
-                    list.add(it)
-                    list.add(Vector(it.x, .0 - (it.y), it.z))
-                }
-            ++d
+        val list = run {
+            val divisions = (2 * PI / asin(particleSpacing / radius)).toInt()
+            val list = Renderer.circle(radius, divisions).toMutableList()
+
+            val da = 2 * PI / divisions
+            var d = 1
+            while (d < divisions / 4) {
+                val radius = cos(da * d) * radius
+                Renderer.circle(radius, (2 * PI / asin(particleSpacing / radius)).toInt())
+                    .map { it.add(Vec(.0, .0 + sin(da * d) * radius, .0)) }
+                    .forEach {
+                        list.add(it)
+                        list.add(Vec(it.x(), -(it.y()), it.z()))
+                    }
+                ++d
+            }
+
+            list.add(Vec(.0, .0 + radius, .0))
+            list.add(Vec(.0, .0 - radius, .0))
+
+            list
         }
 
-        list.add(Vector(.0, .0 + radius, .0))
-        list.add(Vector(.0, .0 - radius, .0))
+        var index = 0
 
-        list
+        override fun hasNext() = index + 1 < list.size
+        override fun next(): Vec {
+            return list[index].also { index++ }
+        }
     }
 
-    override fun iterator(): Iterator<Vector> = iterable.iterator()
+    override fun iterator(): Iterator<Vec> = SphereIterator()
 }
