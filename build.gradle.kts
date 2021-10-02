@@ -10,6 +10,7 @@ version = "2.0.0"
 allprojects {
     apply(plugin = "java")
     apply(plugin = "kotlin")
+    apply(plugin = "maven-publish")
 
     repositories {
         mavenCentral()
