@@ -5,6 +5,6 @@ import world.cepi.particle.renderer.Renderer
 import world.cepi.particle.util.plus
 
 @JvmInline
-value class VectorTransform(val vector: Vec) : Renderer.Transform {
+value class VectorTranslate(val vector: Vec) : Renderer.Transform {
     override fun apply(vector: Vec): Vec = vector + this.vector
 }

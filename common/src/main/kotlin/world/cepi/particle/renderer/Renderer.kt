@@ -7,7 +7,7 @@ import net.minestom.server.timer.Task
 import world.cepi.particle.Particle
 import world.cepi.particle.renderer.animation.TransformAnimation
 import world.cepi.particle.renderer.shape.*
-import world.cepi.particle.renderer.transform.VectorTransform
+import world.cepi.particle.renderer.transform.VectorTranslate
 import world.cepi.particle.showParticle
 import java.time.Duration
 import java.util.function.UnaryOperator
@@ -45,7 +45,7 @@ class Renderer internal constructor() : Particle.Renderer {
 
     fun shape(shape: Shape) = apply { this.shape = shape }
 
-    fun transform(x: Double, y: Double, z: Double) = apply { transform = VectorTransform(Vec(x, y, z)) }
+    fun translate(x: Double, y: Double, z: Double) = apply { transform = VectorTranslate(Vec(x, y, z)) }
 
     fun animate(repeat: Duration, animation: Animator.(Int) -> Unit) = apply {
         this.animation = buildTransformAnimation(animation)
@@ -94,7 +94,7 @@ class Renderer internal constructor() : Particle.Renderer {
     }
 
     abstract class Shape : Iterable<Vec> {
-        val count = run {
+        val count by lazy {
             var i = 0
             for (_0 in iterator()) ++i
             i

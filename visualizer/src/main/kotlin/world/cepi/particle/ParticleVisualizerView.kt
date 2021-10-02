@@ -126,8 +126,7 @@ class ThreeDimensionalVisualizer : View() {
 
                 visibleWhen(WorkspaceSettings.centerVisible)
             }
-
-            SphereRenderer(5.0).map {
+            SphereRenderer(5.0).forEach {
                 Box(.1, .1, .1).attachTo(this).apply {
                     material = PhongMaterial(Color(
                         ThreadLocalRandom.current().nextDouble(0.35, 0.65),
