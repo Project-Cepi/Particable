@@ -1,7 +1,6 @@
 plugins {
     kotlin("jvm") version "1.5.21"
     java
-    `maven-publish`
 }
 
 group = "org.jglrxavpok.nbt"
