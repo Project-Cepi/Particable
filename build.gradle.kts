@@ -24,7 +24,7 @@ allprojects {
         implementation(kotlin("reflect"))
 
         // Use the JUpiter test library.
-        testImplementation("org.junit.jupiter:junit-jupiter:5.7.2")
+        testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
     }
 
     tasks {
