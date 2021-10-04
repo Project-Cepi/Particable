@@ -12,7 +12,7 @@ javafx {
 }
 
 dependencies {
-    implementation("no.tornado:tornadofx:1.7.17")
+    implementation("no.tornado:tornadofx:1.7.20")
 
     implementation("org.jfxtras:jmetro:11.6.14")
 
