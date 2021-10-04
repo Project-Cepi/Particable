@@ -14,7 +14,7 @@ javafx {
 dependencies {
     implementation("no.tornado:tornadofx:1.7.17")
 
-    implementation("org.jfxtras:jmetro:11.6.14")
+    implementation("org.jfxtras:jmetro:11.6.15")
 
     implementation("com.github.Minestom:Minestom:e71c420fa8")
 
