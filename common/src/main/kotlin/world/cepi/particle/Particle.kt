@@ -15,7 +15,7 @@ class Particle<D : Particle.Data, E : Particle.ExtraData>(
     val count: Int,
     val particleData: D,
     val extraData: E,
-    val longDistance: Boolean
+    val longDistance: Boolean = false
 ) : Examinable {
     companion object {
         fun <D : Data, E : ExtraData> particle(name: Key, count: Int, data: D, extraData: E, longDistance: Boolean = false): Particle<D, E> =

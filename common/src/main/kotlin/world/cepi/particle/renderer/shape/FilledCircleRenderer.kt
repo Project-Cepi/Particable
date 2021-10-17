@@ -11,7 +11,7 @@ data class FilledCircleRenderer(
     val innerDivisions: Int = (radius * 10).toInt(),
     val particleSpacing: Double = .1
 ) : Renderer.Shape() {
-    private val iterable = run {
+    override fun iterator(): Iterator<Vec> = run {
         val smallestR = radius / innerDivisions
         val list = LinkedList<Vec>()
         var d = 0
@@ -22,7 +22,5 @@ data class FilledCircleRenderer(
             ++d
         }
         list
-    }
-
-    override fun iterator(): Iterator<Vec> = iterable.iterator()
+    }.iterator()
 }
