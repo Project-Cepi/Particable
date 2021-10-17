@@ -14,10 +14,10 @@ internal sealed class ParticleTypes <D : Particle.Data, E : Particle.ExtraData?>
     Particle.Type<D, E>, Keyed by minestomParticle {
 
     internal class Default(minestomParticle: MinestomParticle) :
-        ParticleTypes<OffsetAndSpeed, Nothing>(minestomParticle)
+        ParticleTypes<OffsetAndSpeed, NoData>(minestomParticle)
 
     internal class Colored(minestomParticle: MinestomParticle) :
-        ParticleTypes<Color, Nothing>(minestomParticle)
+        ParticleTypes<Color, NoData>(minestomParticle)
 
     internal fun interface BinaryData : Particle.ExtraData, Consumer<BinaryWriter>
 

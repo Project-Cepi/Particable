@@ -18,6 +18,8 @@ class Renderer internal constructor() : Particle.Renderer {
     companion object {
         fun point() = Renderer().shape(PointRenderer())
 
+        fun fixedLine(from: Vec, to: Vec, step: Double = 0.1) = Renderer().shape(LineRenderer(from.min(to), step))
+
         fun line(vector: Vec, step: Double = 0.1) = Renderer().shape(LineRenderer(vector, step))
 
         fun points(points: Iterable<Vec>) = Renderer().shape(PointsRenderer(points))
