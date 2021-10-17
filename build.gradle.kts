@@ -39,4 +39,16 @@ allprojects {
 
     val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
     compileKotlin.kotlinOptions.jvmTarget = JavaVersion.VERSION_16.toString()
+
+    publishing {
+        publications {
+            create<MavenPublication>("maven") {
+                groupId = project.properties["group"] as? String?
+                artifactId = project.name
+                version = project.properties["version"] as? String?
+
+                from(components["java"])
+            }
+        }
+    }
 }
