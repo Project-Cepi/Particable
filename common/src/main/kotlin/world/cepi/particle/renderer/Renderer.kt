@@ -14,14 +14,14 @@ import java.util.function.UnaryOperator
 import kotlin.math.PI
 import kotlin.math.asin
 
-class Renderer internal constructor() : Particle.Renderer {
+class Renderer internal constructor() : Particle.Renderer, Shape() {
     companion object {
         fun point() = Renderer().shape(PointRenderer())
 
         fun fixedLine(from: Vec, to: Vec, step: Double = 0.1) = Renderer().shape(LineRenderer(from.max(to).sub(from.min(to)), step))
             .translate(from.min(to))
 
-        fun rectangle(vec: Vec, step: Double = 0.1) = Renderer()
+        fun rectangle(vec: Vec, step: Double = 0.2) = Renderer()
             .shape(line(Vec(vec.x(), .0, .0), step))
             .shape(line(Vec(.0, vec.y(), .0), step))
             .shape(line(Vec(.0, .0, vec.z()), step))
@@ -35,8 +35,9 @@ class Renderer internal constructor() : Particle.Renderer {
             .shape(fixedLine(vec, Vec(.0, vec.y(), vec.z()), step))
             .shape(fixedLine(vec, Vec(vec.x(), vec.y(), .0), step))
 
-            .shape(fixedLine(vec, Vec(.0, .0, vec.z()), step))
-            .shape(fixedLine(vec, Vec(vec.x(), .0, .0), step))
+            .shape(fixedLine(vec, Vec(vec.x(), .0, vec.z()), step))
+            .shape(fixedLine(Vec(vec.x(), vec.y(), .0), Vec(vec.x(), .0, .0), step))
+            .shape(fixedLine(Vec(.0, vec.y(), vec.z()), Vec(.0, .0, vec.z())))
 
         fun fixedRectangle(from: Vec, to: Vec, step: Double = 0.1) = Renderer().shape(rectangle(from.max(to).sub(from.min(to)), step))
             .translate(from.min(to))
@@ -68,7 +69,7 @@ class Renderer internal constructor() : Particle.Renderer {
 
     fun shape(vararg shapes: Shape) = apply { this.shapes.addAll(shapes) }
 
-    fun shape(renderer: Renderer) = apply { this.shapes.addAll(renderer.shapes)}
+    fun shape(vararg renderers: Renderer) = apply { this.shapes.addAll(renderers)}
 
     fun translate(x: Double, y: Double, z: Double) = apply { transform = VectorTranslate(Vec(x, y, z)) }
     fun translate(vec: Vec) = apply { transform = VectorTranslate(vec) }
@@ -116,14 +117,6 @@ class Renderer internal constructor() : Particle.Renderer {
             override fun hasNext(): Boolean = it.hasNext()
 
             override fun next(): Vec = it.next().let { v -> transform?.apply(v) ?: v }
-        }
-    }
-
-    abstract class Shape : Iterable<Vec> {
-        val count by lazy {
-            var i = 0
-            for (_0 in iterator()) ++i
-            i
         }
     }
 
