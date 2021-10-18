@@ -38,6 +38,9 @@ class Renderer internal constructor() : Particle.Renderer {
             .shape(fixedLine(vec, Vec(.0, .0, vec.z())))
             .shape(fixedLine(vec, Vec(vec.x(), .0, .0)))
 
+        fun fixedRectangle(from: Vec, to: Vec, step: Double = 0.1) = Renderer().shape(rectangle(from.max(to).sub(from.min(to)), step))
+            .translate(from.min(to))
+
         fun line(vector: Vec, step: Double = 0.1) = Renderer().shape(LineRenderer(vector, step))
 
         fun points(points: Iterable<Vec>) = Renderer().shape(PointsRenderer(points))
