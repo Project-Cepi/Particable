@@ -18,7 +18,25 @@ class Renderer internal constructor() : Particle.Renderer {
     companion object {
         fun point() = Renderer().shape(PointRenderer())
 
-        fun fixedLine(from: Vec, to: Vec, step: Double = 0.1) = Renderer().shape(LineRenderer(from.min(to), step)).translate(from)
+        fun fixedLine(from: Vec, to: Vec, step: Double = 0.1) = Renderer().shape(LineRenderer(from.max(to).sub(from.min(to)), step))
+            .translate(from.min(to))
+
+        fun rectangle(vec: Vec, step: Double = 0.1) = Renderer()
+            .shape(line(Vec(vec.x(), .0, .0)))
+            .shape(line(Vec(.0, vec.y(), .0)))
+            .shape(line(Vec(.0, .0, vec.z())))
+
+            .shape(fixedLine(Vec(.0, vec.y(), .0), Vec(.0, vec.y(), vec.z())))
+            .shape(fixedLine(Vec(.0, vec.y(), .0), Vec(vec.x(), vec.y(), .0)))
+
+            .shape(fixedLine(Vec(vec.x(), .0, vec.z()), Vec(.0, .0, vec.z())))
+            .shape(fixedLine(Vec(vec.x(), .0, vec.z()), Vec(vec.x(), .0, .0)))
+
+            .shape(fixedLine(vec, Vec(.0, vec.y(), vec.z())))
+            .shape(fixedLine(vec, Vec(vec.x(), vec.y(), .0)))
+
+            .shape(fixedLine(vec, Vec(.0, .0, vec.z())))
+            .shape(fixedLine(vec, Vec(vec.x(), .0, .0)))
 
         fun line(vector: Vec, step: Double = 0.1) = Renderer().shape(LineRenderer(vector, step))
 
@@ -37,7 +55,7 @@ class Renderer internal constructor() : Particle.Renderer {
         fun sphere(radius: Double, particleSpacing: Double = 0.1) = Renderer().shape(SphereRenderer(radius, particleSpacing))
     }
 
-    private lateinit var shape: Shape
+    private var shapes = mutableListOf<Shape>()
 
     private var transform: Transform? = null
 
@@ -45,7 +63,9 @@ class Renderer internal constructor() : Particle.Renderer {
 
     private var repeat = Duration.ZERO
 
-    fun shape(shape: Shape) = apply { this.shape = shape }
+    fun shape(vararg shapes: Shape) = apply { this.shapes.addAll(shapes) }
+
+    fun shape(renderer: Renderer) = apply { this.shapes.addAll(renderer.shapes)}
 
     fun translate(x: Double, y: Double, z: Double) = apply { transform = VectorTranslate(Vec(x, y, z)) }
     fun translate(vec: Vec) = apply { transform = VectorTranslate(vec) }
@@ -67,7 +87,7 @@ class Renderer internal constructor() : Particle.Renderer {
             var i = 0
             MinecraftServer.getSchedulerManager().buildTask {
                 audience.showParticle(particle, Renderer().apply {
-                    this@apply.shape = this@Renderer.shape
+                    this@apply.shapes = this@Renderer.shapes
                     this@apply.transform = Transform {
                         (this@Renderer.animation as TransformAnimation)
                             .invoke(this@Renderer.transform?.apply(it) ?: it, i, 0f)
@@ -76,9 +96,9 @@ class Renderer internal constructor() : Particle.Renderer {
                 ++i
             }
         } else if (animation != null) {
-            val count = shape.count.toFloat()
+            val count = shapes.sumOf { it.count }.toFloat()
             MinecraftServer.getSchedulerManager().buildTask {
-                for ((i, v) in shape.iterator().withIndex()) {
+                for ((i, v) in shapes.flatten().iterator().withIndex()) {
                     audience.showParticle(particle, animation!!.invoke(transform?.apply(v) ?: v, i, i / count))
                 }
             }
@@ -88,7 +108,7 @@ class Renderer internal constructor() : Particle.Renderer {
     }
 
     override fun iterator(): Iterator<Vec> {
-        val it = shape.iterator()
+        val it = shapes.flatten().iterator()
         return object : Iterator<Vec> {
             override fun hasNext(): Boolean = it.hasNext()
 
