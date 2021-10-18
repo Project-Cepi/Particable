@@ -20,9 +20,9 @@ allprojects {
 
     dependencies {
         // Use the Kotlin JDK 8 standard library.
-        implementation(kotlin("stdlib"))
+        compileOnly(kotlin("stdlib"))
 
-        implementation(kotlin("reflect"))
+        compileOnly(kotlin("reflect"))
 
         // Use the JUpiter test library.
         testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")

@@ -1,3 +1,7 @@
+plugins {
+    id("com.github.johnrengelman.shadow") version "7.0.0"
+}
+
 repositories {
     mavenCentral()
     maven(url = "https://repo.spongepowered.org/maven")
@@ -5,5 +9,15 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.Minestom:Minestom:e71c420fa8")
+    compileOnly("com.github.Minestom:Minestom:e71c420fa8")
+}
+
+tasks {
+    named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
+        archiveBaseName.set("particable")
+        mergeServiceFiles()
+        minimize()
+    }
+
+    build { dependsOn(shadowJar) }
 }

@@ -16,8 +16,6 @@ dependencies {
     compileOnly("com.github.Minestom:Minestom:e71c420fa8")
 
     compileOnly(kotlin("reflect"))
-
-    implementation(project(":common"))
 }
 
 // Take gradle.properties and apply it to resources.

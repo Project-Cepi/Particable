@@ -1,0 +1,5 @@
+{
+  "entrypoint": "world.cepi.particle",
+  "name": "Particable",
+  "version": "1.0.0"
+}
