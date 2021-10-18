@@ -22,21 +22,21 @@ class Renderer internal constructor() : Particle.Renderer {
             .translate(from.min(to))
 
         fun rectangle(vec: Vec, step: Double = 0.1) = Renderer()
-            .shape(line(Vec(vec.x(), .0, .0)))
-            .shape(line(Vec(.0, vec.y(), .0)))
-            .shape(line(Vec(.0, .0, vec.z())))
+            .shape(line(Vec(vec.x(), .0, .0), step))
+            .shape(line(Vec(.0, vec.y(), .0), step))
+            .shape(line(Vec(.0, .0, vec.z()), step))
 
-            .shape(fixedLine(Vec(.0, vec.y(), .0), Vec(.0, vec.y(), vec.z())))
-            .shape(fixedLine(Vec(.0, vec.y(), .0), Vec(vec.x(), vec.y(), .0)))
+            .shape(fixedLine(Vec(.0, vec.y(), .0), Vec(.0, vec.y(), vec.z()), step))
+            .shape(fixedLine(Vec(.0, vec.y(), .0), Vec(vec.x(), vec.y(), .0), step))
 
-            .shape(fixedLine(Vec(vec.x(), .0, vec.z()), Vec(.0, .0, vec.z())))
-            .shape(fixedLine(Vec(vec.x(), .0, vec.z()), Vec(vec.x(), .0, .0)))
+            .shape(fixedLine(Vec(vec.x(), .0, vec.z()), Vec(.0, .0, vec.z()), step))
+            .shape(fixedLine(Vec(vec.x(), .0, vec.z()), Vec(vec.x(), .0, .0), step))
 
-            .shape(fixedLine(vec, Vec(.0, vec.y(), vec.z())))
-            .shape(fixedLine(vec, Vec(vec.x(), vec.y(), .0)))
+            .shape(fixedLine(vec, Vec(.0, vec.y(), vec.z()), step))
+            .shape(fixedLine(vec, Vec(vec.x(), vec.y(), .0), step))
 
-            .shape(fixedLine(vec, Vec(.0, .0, vec.z())))
-            .shape(fixedLine(vec, Vec(vec.x(), .0, .0)))
+            .shape(fixedLine(vec, Vec(.0, .0, vec.z()), step))
+            .shape(fixedLine(vec, Vec(vec.x(), .0, .0), step))
 
         fun fixedRectangle(from: Vec, to: Vec, step: Double = 0.1) = Renderer().shape(rectangle(from.max(to).sub(from.min(to)), step))
             .translate(from.min(to))
