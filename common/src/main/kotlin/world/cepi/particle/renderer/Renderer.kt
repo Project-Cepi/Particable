@@ -18,7 +18,7 @@ class Renderer internal constructor() : Particle.Renderer {
     companion object {
         fun point() = Renderer().shape(PointRenderer())
 
-        fun fixedLine(from: Vec, to: Vec, step: Double = 0.1) = Renderer().shape(LineRenderer(from.min(to), step))
+        fun fixedLine(from: Vec, to: Vec, step: Double = 0.1) = Renderer().shape(LineRenderer(from.min(to), step)).translate(from)
 
         fun line(vector: Vec, step: Double = 0.1) = Renderer().shape(LineRenderer(vector, step))
 
@@ -48,6 +48,7 @@ class Renderer internal constructor() : Particle.Renderer {
     fun shape(shape: Shape) = apply { this.shape = shape }
 
     fun translate(x: Double, y: Double, z: Double) = apply { transform = VectorTranslate(Vec(x, y, z)) }
+    fun translate(vec: Vec) = apply { transform = VectorTranslate(vec) }
 
     fun animate(repeat: Duration, animation: Animator.(Int) -> Unit) = apply {
         this.animation = buildTransformAnimation(animation)
