@@ -7,8 +7,9 @@ import net.kyori.adventure.audience.ForwardingAudience
 import net.minestom.server.adventure.audience.PacketGroupingAudience
 import net.minestom.server.coordinate.Vec
 import net.minestom.server.entity.Player
+import world.cepi.particle.renderer.VecIterable
 
-fun <D : Particle.Data, E : Particle.ExtraData> Audience.showParticle(particle: Particle<D, E>, renderer: Particle.Renderer) {
+fun <D : Particle.Data, E : Particle.ExtraData> Audience.showParticle(particle: Particle<D, E>, renderer: VecIterable) {
     when (this) {
         is PacketGroupingAudience -> showParticle(particle, renderer)
         is ForwardingAudience.Single -> showParticle(particle, renderer)
@@ -26,7 +27,7 @@ fun <D : Particle.Data, E : Particle.ExtraData> Audience.showParticle(particle: 
     }
 }
 
-fun <D : Particle.Data, E : Particle.ExtraData> ForwardingAudience.showParticle(particle: Particle<D, E>, renderer: Particle.Renderer) {
+fun <D : Particle.Data, E : Particle.ExtraData> ForwardingAudience.showParticle(particle: Particle<D, E>, renderer: VecIterable) {
     audiences().forEach { it.showParticle(particle, renderer) }
 }
 
@@ -34,7 +35,7 @@ fun <D : Particle.Data, E : Particle.ExtraData> ForwardingAudience.showParticle(
     audiences().forEach { it.showParticle(particle, renderer) }
 }
 
-fun <D : Particle.Data, E : Particle.ExtraData> PacketGroupingAudience.showParticle(particle: Particle<D, E>, renderer: Particle.Renderer) {
+fun <D : Particle.Data, E : Particle.ExtraData> PacketGroupingAudience.showParticle(particle: Particle<D, E>, renderer: VecIterable) {
     PacketFactory.createParticlePackets(particle, renderer).forEach(this::sendGroupedPacket)
 }
 
@@ -42,7 +43,7 @@ fun <D : Particle.Data, E : Particle.ExtraData> PacketGroupingAudience.showParti
     sendGroupedPacket(PacketFactory.createParticlePacket(particle, renderer))
 }
 
-fun <D : Particle.Data, E : Particle.ExtraData> Player.showParticle(particle: Particle<D, E>, renderer: Particle.Renderer) {
+fun <D : Particle.Data, E : Particle.ExtraData> Player.showParticle(particle: Particle<D, E>, renderer: VecIterable) {
     PacketFactory.createParticlePackets(particle, renderer).forEach(playerConnection::sendPacket)
 }
 
@@ -50,7 +51,7 @@ fun <D : Particle.Data, E : Particle.ExtraData> Player.showParticle(particle: Pa
     playerConnection.sendPacket(PacketFactory.createParticlePacket(particle, renderer))
 }
 
-fun <D : Particle.Data, E : Particle.ExtraData> ForwardingAudience.Single.showParticle(particle: Particle<D, E>, renderer: Particle.Renderer) {
+fun <D : Particle.Data, E : Particle.ExtraData> ForwardingAudience.Single.showParticle(particle: Particle<D, E>, renderer: VecIterable) {
     audience().showParticle(particle, renderer)
 }
 

@@ -89,5 +89,4 @@ class Particle<D : Particle.Data, E : Particle.ExtraData>(
 
     interface ExtraData : Examinable
 
-    interface Renderer : Iterable<Vec>
 }

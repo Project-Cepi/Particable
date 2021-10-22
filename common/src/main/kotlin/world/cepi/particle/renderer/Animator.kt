@@ -15,9 +15,6 @@ value class Animator internal constructor(@PublishedApi internal val vector: Vec
 internal inline fun buildTransformAnimation(crossinline animation: Animator.(Int) -> Unit): TransformAnimation =
     TransformAnimation { v, i -> Animator(+v).apply { animation(i) }.vector }
 
-internal inline fun buildPerParticleAnimation(crossinline animation: Animator.(Int, Float) -> Unit): PerParticleAnimation =
-    PerParticleAnimation { v, i, f -> Animator(+v).apply { animation(i, f) }.vector }
-
 fun Animator.translate(x: Double, y: Double, z: Double) {
     transform {
         add(x, y, z)

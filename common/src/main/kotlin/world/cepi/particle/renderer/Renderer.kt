@@ -14,7 +14,7 @@ import java.util.function.UnaryOperator
 import kotlin.math.PI
 import kotlin.math.asin
 
-class Renderer internal constructor() : Particle.Renderer, Shape() {
+class Renderer internal constructor() : VecIterable, Shape() {
     companion object {
         fun point() = Renderer().shape(PointRenderer())
 
@@ -59,7 +59,7 @@ class Renderer internal constructor() : Particle.Renderer, Shape() {
         fun sphere(radius: Double, particleSpacing: Double = 0.1) = Renderer().shape(SphereRenderer(radius, particleSpacing))
     }
 
-    private var shapes = mutableListOf<Shape>()
+    private var shapes = mutableListOf<VecIterable>()
 
     private var transform: Transform? = null
 
@@ -67,20 +67,13 @@ class Renderer internal constructor() : Particle.Renderer, Shape() {
 
     private var repeat = Duration.ZERO
 
-    fun shape(vararg shapes: Shape) = apply { this.shapes.addAll(shapes) }
-
-    fun shape(vararg renderers: Renderer) = apply { this.shapes.addAll(renderers)}
+    fun shape(vararg renderers: VecIterable) = apply { this.shapes.addAll(renderers) }
 
     fun translate(x: Double, y: Double, z: Double) = apply { transform = VectorTranslate(Vec(x, y, z)) }
     fun translate(vec: Vec) = apply { transform = VectorTranslate(vec) }
 
     fun animate(repeat: Duration, animation: Animator.(Int) -> Unit) = apply {
         this.animation = buildTransformAnimation(animation)
-        this.repeat = repeat
-    }
-
-    fun animatePerParticle(repeat: Duration, animation: Animator.(Int, Float) -> Unit) = apply {
-        this.animation = buildPerParticleAnimation(animation)
         this.repeat = repeat
     }
 
@@ -94,16 +87,15 @@ class Renderer internal constructor() : Particle.Renderer, Shape() {
                     this@apply.shapes = this@Renderer.shapes
                     this@apply.transform = Transform {
                         (this@Renderer.animation as TransformAnimation)
-                            .invoke(this@Renderer.transform?.apply(it) ?: it, i, 0f)
+                            .invoke(this@Renderer.transform?.apply(it) ?: it, i)
                     }
                 })
                 ++i
             }
         } else if (animation != null) {
-            val count = shapes.sumOf { it.count }.toFloat()
             MinecraftServer.getSchedulerManager().buildTask {
                 for ((i, v) in shapes.flatten().iterator().withIndex()) {
-                    audience.showParticle(particle, animation!!.invoke(transform?.apply(v) ?: v, i, i / count))
+                    audience.showParticle(particle, animation!!.invoke(transform?.apply(v) ?: v, i))
                 }
             }
         } else MinecraftServer.getSchedulerManager().buildTask {
@@ -122,5 +114,5 @@ class Renderer internal constructor() : Particle.Renderer, Shape() {
 
     fun interface Transform : UnaryOperator<Vec>
 
-    fun interface Animation : (Vec, Int, Float) -> Vec
+    fun interface Animation : (Vec, Int) -> Vec
 }
