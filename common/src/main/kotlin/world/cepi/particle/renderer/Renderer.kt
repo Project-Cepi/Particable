@@ -44,8 +44,7 @@ class Renderer internal constructor() : VecIterable, Shape() {
 
         fun line(vector: Vec, step: Double = 0.1) = Renderer().shape(LineRenderer(vector, step))
 
-        fun points(points: Iterable<Vec>) = Renderer().shape(PointsRenderer(points))
-        fun points(vararg points: Vec) = Renderer().shape(PointsRenderer(points.asIterable()))
+        fun points(vararg points: Vec) = Renderer().shape(points.asIterable())
 
         fun polygon(points: Iterable<Vec>, step: Double = 0.1) = Renderer().shape(PolygonRenderer(points, step))
         fun polygon(vararg points: Vec,  step: Double = 0.1) = Renderer().shape(PolygonRenderer(points.asIterable(), step))
@@ -68,6 +67,7 @@ class Renderer internal constructor() : VecIterable, Shape() {
     private var repeat = Duration.ZERO
 
     fun shape(vararg renderers: VecIterable) = apply { this.shapes.addAll(renderers) }
+    fun shape(iterable: VecIterable) = apply { this.shapes.add(iterable) }
 
     fun translate(x: Double, y: Double, z: Double) = apply { transform = VectorTranslate(Vec(x, y, z)) }
     fun translate(vec: Vec) = apply { transform = VectorTranslate(vec) }
