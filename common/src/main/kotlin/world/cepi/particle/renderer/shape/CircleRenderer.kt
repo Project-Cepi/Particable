@@ -1,8 +1,8 @@
 package world.cepi.particle.renderer.shape
 
 import net.minestom.server.coordinate.Vec
-import world.cepi.particle.renderer.Renderer
-import world.cepi.particle.renderer.Shape
+import world.cepi.particle.renderer.VecIterable
+import java.awt.Shape
 import kotlin.math.PI
 import kotlin.math.asin
 import kotlin.math.cos
@@ -11,7 +11,7 @@ import kotlin.math.sin
 data class CircleRenderer(
     val radius: Double,
     val divisions: Int = (2 * PI / asin(0.1 / radius)).toInt()
-) : Shape() {
+) : VecIterable {
     private val step = (2 * PI / divisions)
     private val radians = DoubleArray(divisions) { i -> step * i }
     private val xs = DoubleArray(divisions) { i -> cos(radians[i]) * radius }

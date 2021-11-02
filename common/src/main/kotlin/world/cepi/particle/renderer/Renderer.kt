@@ -9,14 +9,15 @@ import world.cepi.particle.renderer.animation.TransformAnimation
 import world.cepi.particle.renderer.shape.*
 import world.cepi.particle.renderer.transform.VectorTranslate
 import world.cepi.particle.showParticle
+import java.awt.Shape
 import java.time.Duration
 import java.util.function.UnaryOperator
 import kotlin.math.PI
 import kotlin.math.asin
 
-class Renderer internal constructor() : VecIterable, Shape() {
+class Renderer internal constructor() : VecIterable {
     companion object {
-        fun point() = Renderer().shape(PointRenderer())
+        fun point() = Renderer().shape(PointRenderer)
 
         fun fixedLine(from: Vec, to: Vec, step: Double = 0.1) = Renderer().shape(LineRenderer(from.max(to).sub(from.min(to)), step))
             .translate(from.min(to))
@@ -94,8 +95,8 @@ class Renderer internal constructor() : VecIterable, Shape() {
             }
         } else if (animation != null) {
             MinecraftServer.getSchedulerManager().buildTask {
-                for ((i, v) in shapes.flatten().iterator().withIndex()) {
-                    audience.showParticle(particle, animation!!.invoke(transform?.apply(v) ?: v, i))
+                shapes.flatten().forEachIndexed { index, vec ->
+                    audience.showParticle(particle, animation!!.invoke(transform?.apply(vec) ?: vec, index))
                 }
             }
         } else MinecraftServer.getSchedulerManager().buildTask {

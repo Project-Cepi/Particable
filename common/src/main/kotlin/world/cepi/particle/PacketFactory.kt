@@ -19,7 +19,7 @@ object PacketFactory {
         Collections.singleton(createParticlePacket(particle, renderer))
 
     fun createParticlePacket(particle: Particle<*, *>, renderer: Vec) = ParticlePacket().apply {
-        particleId = (ids[particle.name] ?: 0).toInt()
+        particleId = ids[particle.name] ?: 0
         longDistance = particle.longDistance
 
         x = renderer.x()

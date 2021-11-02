@@ -2,7 +2,8 @@ package world.cepi.particle.renderer.shape
 
 import net.minestom.server.coordinate.Vec
 import world.cepi.particle.renderer.Renderer
-import world.cepi.particle.renderer.Shape
+import world.cepi.particle.renderer.VecIterable
+import java.awt.Shape
 import java.util.*
 import kotlin.math.PI
 import kotlin.math.asin
@@ -12,7 +13,7 @@ import kotlin.math.sin
 data class SphereRenderer(
     val radius: Double,
     val particleSpacing: Double = .2
-) : Shape() {
+) : VecIterable {
     private val iterable = run {
         val list = LinkedList<Vec>()
         val divisions = (2 * PI / asin(particleSpacing / radius)).toInt()

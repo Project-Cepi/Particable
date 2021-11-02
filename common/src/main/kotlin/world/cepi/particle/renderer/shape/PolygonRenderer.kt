@@ -1,13 +1,12 @@
 package world.cepi.particle.renderer.shape
 
 import net.minestom.server.coordinate.Vec
-import world.cepi.particle.renderer.Renderer
-import world.cepi.particle.renderer.Shape
 import world.cepi.particle.renderer.VecIterable
 import world.cepi.particle.util.Vectors
+import java.awt.Shape
 import java.util.*
 
-data class PolygonRenderer(val vectors: VecIterable, val step: Double = .1) : Shape() {
+data class PolygonRenderer(val vectors: VecIterable, val step: Double = .1) : VecIterable {
     private val iterable: Iterable<Vec> = run {
         val i0 = vectors.iterator()
         if (!i0.hasNext()) return@run emptySet<Vec>()
