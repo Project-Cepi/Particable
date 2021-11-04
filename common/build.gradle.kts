@@ -10,6 +10,7 @@ repositories {
 
 dependencies {
     compileOnly("com.github.Minestom:Minestom:e71c420fa8")
+    testImplementation("com.github.Minestom:Minestom:e71c420fa8")
 }
 
 tasks {

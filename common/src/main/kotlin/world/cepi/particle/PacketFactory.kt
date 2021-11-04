@@ -15,6 +15,9 @@ object PacketFactory {
     fun createParticlePackets(particle: Particle<*, *>, renderer: Iterable<Vec>): Collection<ParticlePacket> =
         renderer.map { createParticlePacket(particle, it) }
 
+    fun createParticlePackets(particle: Particle<*, *>, renderer: Sequence<Vec>): Collection<ParticlePacket> =
+        renderer.map { createParticlePacket(particle, it) }.toList()
+
     fun createParticlePackets(particle: Particle<*, *>, renderer: Vec): Collection<ParticlePacket> =
         Collections.singleton(createParticlePacket(particle, renderer))
 

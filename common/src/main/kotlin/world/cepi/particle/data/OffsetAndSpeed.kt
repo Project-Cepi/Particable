@@ -4,7 +4,13 @@ import net.kyori.examination.ExaminableProperty
 import world.cepi.particle.Particle
 import java.util.stream.Stream
 
-data class OffsetAndSpeed(val offX: Float, val offY: Float, val offZ: Float, val speed: Float) : Particle.Data {
+data class OffsetAndSpeed(
+    val offX: Float = 0f,
+    val offY: Float = 0f,
+    val offZ: Float = 0f,
+    val speed: Float = 0f
+) : Particle.Data {
+
     override fun examinableProperties(): Stream<out ExaminableProperty> = Stream.of(
         ExaminableProperty.of("offX", offX),
         ExaminableProperty.of("offY", offY),
