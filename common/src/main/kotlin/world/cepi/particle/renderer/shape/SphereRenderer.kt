@@ -5,36 +5,27 @@ import world.cepi.particle.renderer.Renderer
 import world.cepi.particle.renderer.VecSequence
 import java.awt.Shape
 import java.util.*
-import kotlin.math.PI
-import kotlin.math.asin
-import kotlin.math.cos
-import kotlin.math.sin
+import kotlin.math.*
 
 data class SphereRenderer(
     val radius: Double,
-    val particleSpacing: Double = .2
+    val particles: Int = 50 // Higher is more detailed
 ) : VecSequence {
+
     private val iterable = run {
         val list = LinkedList<Vec>()
-        val divisions = (2 * PI / asin(particleSpacing / radius)).toInt()
 
-        Renderer.circle(radius, divisions).forEach(list::add)
+        val phi = PI * (3.0 - sqrt(5.0))
 
-        val da = 2 * PI / divisions
-        var d = 1
-        while (d < divisions / 4) {
-            val radius = cos(da * d) * radius
-            Renderer.circle(radius, (2 * PI / asin(particleSpacing / radius)).toInt())
-                .map { it.add(Vec(.0, .0 + sin(da * d) * this.radius, .0)) }
-                .forEach {
-                    list.add(it)
-                    list.add(Vec(it.x(), .0 - (it.y()), it.z()))
-                }
-            ++d
+        repeat(particles) {
+            val y = 1.0 - (it / (particles - 1.0)) * 2.0
+            val yRadius = sqrt(1.0 - y * y)
+            val theta = phi * it
+            val x = cos(theta) * yRadius
+            val z = sin(theta) * yRadius
+
+            list.add(Vec(x * radius, y * radius, z * radius))
         }
-
-        list.add(Vec(.0, .0 + radius, .0))
-        list.add(Vec(.0, .0 - radius, .0))
 
         list
     }
