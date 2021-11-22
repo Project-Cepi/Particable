@@ -42,5 +42,6 @@ object Renderer {
     fun filledCircle(radius: Double, innerDivisions: Int = (radius * 10).toInt(), particleSpacing: Double = 0.1) =
         FilledCircleRenderer(radius, innerDivisions, particleSpacing)
 
-    fun sphere(radius: Double, particles: Int = 50) = SphereRenderer(radius, particles)
+    fun sphere(particles: Int = 50) = SphereRenderer(particles)
+    fun sphere(radius: Double, particles: Int = 50) = SphereRenderer(particles).expand(radius)
 }
