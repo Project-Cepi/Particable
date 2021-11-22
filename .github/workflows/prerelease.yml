@@ -27,4 +27,4 @@ jobs:
           title: "Development Build"
           files: |
             LICENSE.md
-            extension/build/libs/*.jar
+            common/build/libs/*.jar
