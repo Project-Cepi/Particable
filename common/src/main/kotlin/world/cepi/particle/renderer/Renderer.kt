@@ -2,14 +2,14 @@ package world.cepi.particle.renderer
 
 import net.minestom.server.coordinate.Vec
 import world.cepi.particle.renderer.shape.*
+import world.cepi.particle.util.Vectors
 import kotlin.math.PI
 import kotlin.math.asin
 
 object Renderer {
     fun point() = Vec.ZERO
 
-    fun fixedLine(from: Vec, to: Vec, step: Double = 0.1) = LineRenderer(from.max(to).sub(from.min(to)), step)
-        .translate(from.min(to))
+    fun fixedLine(from: Vec, to: Vec, step: Double = 0.1) = Vectors(from, to, step)
 
     fun rectangle(vec: Vec, step: Double = 0.2) = line(Vec(vec.x(), .0, .0), step) +
             line(Vec(.0, vec.y(), .0), step) +
