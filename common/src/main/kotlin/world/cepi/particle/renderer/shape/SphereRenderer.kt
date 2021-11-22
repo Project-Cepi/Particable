@@ -2,32 +2,38 @@ package world.cepi.particle.renderer.shape
 
 import net.minestom.server.coordinate.Vec
 import world.cepi.particle.renderer.Renderer
+import world.cepi.particle.renderer.VecIterable
 import world.cepi.particle.renderer.VecSequence
 import java.awt.Shape
 import java.util.*
 import kotlin.math.*
 
 data class SphereRenderer(
-    val radius: Double,
-    val particles: Int = 50 // Higher is more detailed
+    /** The higher it is the more detailed it is. */
+    val particles: Int = 50
 ) : VecSequence {
 
-    private val iterable = run {
-        val list = LinkedList<Vec>()
-
+    companion object {
         val phi = PI * (3.0 - sqrt(5.0))
+    }
 
-        repeat(particles) {
-            val y = 1.0 - (it / (particles - 1.0)) * 2.0
+    private val iterable = object : Iterator<Vec> {
+
+        var particleCount = 0
+
+        override fun hasNext() = particles >= particleCount
+
+        override fun next(): Vec {
+            val y = 1.0 - (particleCount / (particles - 1.0)) * 2.0
             val yRadius = sqrt(1.0 - y * y)
-            val theta = phi * it
-            val x = cos(theta) * yRadius
-            val z = sin(theta) * yRadius
+            val theta = phi * particleCount
 
-            list.add(Vec(x * radius, y * radius, z * radius))
+            return Vec(
+                cos(theta) * yRadius,
+                y,
+                sin(theta) * yRadius
+            )
         }
-
-        list
     }
 
     override fun iterator(): Iterator<Vec> = iterable.iterator()

@@ -8,6 +8,7 @@ import world.cepi.particle.showParticle
 typealias VecIterable = Iterable<Vec>
 typealias VecSequence = Sequence<Vec>
 
+fun VecSequence.expand(amount: Double) = this.map { it.mul(amount) }
 fun VecSequence.translate(translationVec: Vec) = this.map { it.add(translationVec) }
 
 fun VecSequence.render(particle: Particle<*, *>, audience: Audience) = audience.showParticle(particle, this)
