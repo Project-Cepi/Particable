@@ -1,19 +1,17 @@
 package world.cepi.particle
 
-import world.cepi.particle.data.Color;
-import world.cepi.particle.data.OffsetAndSpeed;
-import world.cepi.particle.extra.*;
-import world.cepi.particle.Particle.Type;
-import net.minestom.server.particle.Particle;
+import world.cepi.particle.data.Color
+import world.cepi.particle.data.OffsetAndSpeed
+import world.cepi.particle.extra.*
+import world.cepi.particle.Particle.Type
+import net.minestom.server.particle.Particle
 
 object ParticleType {
     val AMBIENT_ENTITY_EFFECT: Type<Color, NoData> = ParticleTypes.Colored(Particle.AMBIENT_ENTITY_EFFECT)
     
     val ANGRY_VILLAGER: Type<OffsetAndSpeed, NoData> = ParticleTypes.Default(Particle.ANGRY_VILLAGER)
     
-    val BARRIER: Type<OffsetAndSpeed, NoData> = ParticleTypes.Default(Particle.BARRIER)
-    
-    val LIGHT: Type<OffsetAndSpeed, NoData> = ParticleTypes.Default(Particle.LIGHT)
+    val BLOCK_MARKER: Type<OffsetAndSpeed, NoData> = ParticleTypes.Default(Particle.BLOCK_MARKER)
     
     val BLOCK: Type<OffsetAndSpeed, BlockState> = ParticleTypes.Block(Particle.BLOCK)
     
@@ -93,48 +91,33 @@ object ParticleType {
 
     val MYCELIUM: Type<OffsetAndSpeed, NoData> = ParticleTypes.Default(Particle.MYCELIUM)
 
-
     val NOTE: Type<OffsetAndSpeed, NoData> = ParticleTypes.Default(Particle.NOTE)
-
 
     val POOF: Type<OffsetAndSpeed, NoData> = ParticleTypes.Default(Particle.POOF)
 
-
     val PORTAL: Type<OffsetAndSpeed, NoData> = ParticleTypes.Default(Particle.PORTAL)
-
 
     val RAIN: Type<OffsetAndSpeed, NoData> = ParticleTypes.Default(Particle.RAIN)
 
-
     val SMOKE: Type<OffsetAndSpeed, NoData> = ParticleTypes.Default(Particle.SMOKE)
-
 
     val SNEEZE: Type<OffsetAndSpeed, NoData> = ParticleTypes.Default(Particle.SNEEZE)
 
-
     val SPIT: Type<OffsetAndSpeed, NoData> = ParticleTypes.Default(Particle.SPIT)
-
 
     val SQUID_INK: Type<OffsetAndSpeed, NoData> = ParticleTypes.Default(Particle.SQUID_INK)
 
-
     val SWEEP_ATTACK: Type<OffsetAndSpeed, NoData> = ParticleTypes.Default(Particle.SWEEP_ATTACK)
-
 
     val TOTEM_OF_UNDYING: Type<OffsetAndSpeed, NoData> = ParticleTypes.Default(Particle.TOTEM_OF_UNDYING)
 
-
     val UNDERWATER: Type<OffsetAndSpeed, NoData> = ParticleTypes.Default(Particle.UNDERWATER)
-
 
     val SPLASH: Type<OffsetAndSpeed, NoData> = ParticleTypes.Default(Particle.SPLASH)
 
-
     val WITCH: Type<OffsetAndSpeed, NoData> = ParticleTypes.Default(Particle.WITCH)
 
-
     val BUBBLE_POP: Type<OffsetAndSpeed, NoData> = ParticleTypes.Default(Particle.BUBBLE_POP)
-
 
     val CURRENT_DOWN: Type<OffsetAndSpeed, NoData> = ParticleTypes.Default(Particle.CURRENT_DOWN)
 

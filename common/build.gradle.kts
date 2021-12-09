@@ -1,5 +1,5 @@
 plugins {
-    id("com.github.johnrengelman.shadow") version "7.0.0"
+    id("com.github.johnrengelman.shadow") version "7.1.0"
 }
 
 repositories {
@@ -9,8 +9,8 @@ repositories {
 }
 
 dependencies {
-    compileOnly("com.github.Minestom:Minestom:e71c420fa8")
-    testImplementation("com.github.Minestom:Minestom:e71c420fa8")
+    compileOnly("com.github.Minestom:Minestom:3843cacef5")
+    testImplementation("com.github.Minestom:Minestom:3843cacef5")
 }
 
 tasks {

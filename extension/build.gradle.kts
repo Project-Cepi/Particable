@@ -13,7 +13,7 @@ repositories {
     maven(url = "https://repo.velocitypowered.com/snapshots/")
 }
 dependencies {
-    compileOnly("com.github.Minestom:Minestom:e71c420fa8")
+    compileOnly("com.github.Minestom:Minestom:3843cacef5")
 
     compileOnly(kotlin("reflect"))
 }
