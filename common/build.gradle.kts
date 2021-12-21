@@ -9,8 +9,8 @@ repositories {
 }
 
 dependencies {
-    compileOnly("com.github.Minestom:Minestom:e71c420fa8")
-    testImplementation("com.github.Minestom:Minestom:e71c420fa8")
+    compileOnly("com.github.emortaldev:Minestom:01c28d0818")
+    testImplementation("com.github.emortaldev:Minestom:01c28d0818")
 }
 
 tasks {
