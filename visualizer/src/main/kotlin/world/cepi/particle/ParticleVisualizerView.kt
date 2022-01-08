@@ -27,7 +27,7 @@ class ParticleVisualizerView : View("Particlable Visualizer") {
 class SelectorView : View() {
     override val root = vbox {
         combobox<String>(SimpleStringProperty("Circle")) {
-            items = Renderer::class.sealedSubclasses.map { it.simpleName!!.dropLast("Renderer".length) }.observable()
+            items = Renderer::class.sealedSubclasses.map { it.simpleName!!.dropLast("Renderer".length) }.asObservable()
         }
     }
 }

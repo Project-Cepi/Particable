@@ -13,7 +13,7 @@ repositories {
     maven(url = "https://repo.velocitypowered.com/snapshots/")
 }
 dependencies {
-    compileOnly("com.github.Minestom:Minestom:e71c420fa8")
+    compileOnly("com.github.Minestom:Minestom:4ee5cbe424")
 
     compileOnly(kotlin("reflect"))
 }
@@ -22,7 +22,7 @@ dependencies {
 tasks {
     processResources {
         // Apply properties to extension.json
-        filesMatching("extension.json") {
+        filesMatching("META-INF/extension.json") {
             expand(project.properties)
         }
     }
