@@ -1,8 +1,0 @@
-{
-  "entrypoint": "${project.group}.${project.mainClass}",
-  "name": "Particable",
-  "version": "${project.version}",
-  "dependencies": [
-    "KStom"
-  ]
-}

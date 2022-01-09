@@ -21,27 +21,26 @@ object PacketFactory {
     fun createParticlePackets(particle: Particle<*, *>, renderer: Vec): Collection<ParticlePacket> =
         Collections.singleton(createParticlePacket(particle, renderer))
 
-    fun createParticlePacket(particle: Particle<*, *>, renderer: Vec) = ParticlePacket().apply {
-        particleId = ids[particle.name] ?: 0
-        longDistance = particle.longDistance
+    fun createParticlePacket(particle: Particle<*, *>, renderer: Vec) = ParticlePacket(
+        ids[particle.name] ?: 0,
+        particle.longDistance,
 
-        x = renderer.x()
-        y = renderer.y()
-        z = renderer.z()
+        renderer.x(),
+        renderer.y(),
+        renderer.z(),
 
-        val (offX, offY, offZ, extra) = particle.particleData
-        offsetX = offX
-        offsetY = offY
-        offsetZ = offZ
+        particle.particleData.component1(),
+        particle.particleData.component2(),
+        particle.particleData.component3(),
 
-        particleData = extra
-        particleCount = particle.count
-
-        data = when (val extraData = particle.extraData) {
+        particle.particleData.component4(),
+        particle.count,
+        
+        when (val extraData = particle.extraData) {
             is ParticleTypes.BinaryData ->
                 BinaryWriter().also { extraData.accept(it) }.toByteArray()
             else -> ByteArray(0)
         }
-    }
+    )
 
 }

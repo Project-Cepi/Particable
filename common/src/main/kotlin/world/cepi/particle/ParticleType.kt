@@ -14,12 +14,6 @@ object ParticleType {
     val ANGRY_VILLAGER: Type<OffsetAndSpeed, NoData> = ParticleTypes.Default(Particle.ANGRY_VILLAGER)
 
     @JvmField
-    val BARRIER: Type<OffsetAndSpeed, NoData> = ParticleTypes.Default(Particle.BARRIER)
-
-    @JvmField
-    val LIGHT: Type<OffsetAndSpeed, NoData> = ParticleTypes.Default(Particle.LIGHT)
-
-    @JvmField
     val BLOCK: Type<OffsetAndSpeed, BlockState> = ParticleTypes.Block(Particle.BLOCK)
 
     @JvmField
