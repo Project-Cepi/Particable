@@ -28,6 +28,9 @@ object Renderer {
             fixedLine(Vec(vec.x(), vec.y(), .0), Vec(vec.x(), .0, .0), step) +
             fixedLine(Vec(.0, vec.y(), vec.z()), Vec(.0, .0, vec.z()))
 
+    fun quadraticBeizerCurveRenderer(start: Vec, pull: Vec, end: Vec, points: Int)
+        = QuadraticBeizerCurveRenderer(points, start, pull, end)
+
     fun fixedRectangle(from: Vec, to: Vec, step: Double = 0.1) = rectangle(from.max(to).sub(from.min(to)), step)
         .translate(from.min(to))
 
