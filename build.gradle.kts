@@ -4,7 +4,7 @@ plugins {
     `maven-publish`
 }
 
-group = "org.jglrxavpok.nbt"
+group = "world.cepi.particle"
 version = "2.0.0"
 
 allprojects {
