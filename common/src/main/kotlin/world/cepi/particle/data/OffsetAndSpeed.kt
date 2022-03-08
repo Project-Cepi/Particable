@@ -4,7 +4,7 @@ import net.kyori.examination.ExaminableProperty
 import world.cepi.particle.Particle
 import java.util.stream.Stream
 
-data class OffsetAndSpeed(
+data class OffsetAndSpeed @JvmOverloads constructor(
     val offX: Float = 0f,
     val offY: Float = 0f,
     val offZ: Float = 0f,

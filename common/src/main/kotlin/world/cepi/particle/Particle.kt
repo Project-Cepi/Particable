@@ -9,7 +9,7 @@ import net.kyori.examination.ExaminableProperty
 import net.kyori.examination.string.StringExaminer
 import java.util.stream.Stream
 
-class Particle<D : Particle.Data, E : Particle.ExtraData>(
+class Particle<D : Particle.Data, E : Particle.ExtraData> @JvmOverloads constructor(
     val name: Key,
     val count: Int,
     val particleData: D,
@@ -17,24 +17,39 @@ class Particle<D : Particle.Data, E : Particle.ExtraData>(
     val longDistance: Boolean = false
 ) : Examinable {
     companion object {
+
+        @JvmStatic
+        @JvmOverloads
         fun <D : Data, E : ExtraData> particle(name: Key, count: Int, data: D, extraData: E, longDistance: Boolean = false): Particle<D, E> =
             Particle(name, count, data, extraData, longDistance)
 
+        @JvmStatic
+        @JvmOverloads
         fun <D : Data, E : ExtraData> particle(type: Type<D, E>, count: Int, data: D, extraData: E, longDistance: Boolean = false): Particle<D, E> =
             particle(type.key(), count, data, extraData, longDistance)
 
+        @JvmStatic
+        @JvmOverloads
         fun <D : Data, E : ExtraData> particle(type: () -> Type<D, E>, count: Int, data: D, extraData: E, longDistance: Boolean = false): Particle<D, E> =
             Particle(type().key(), count, data, extraData, longDistance)
 
+        @JvmStatic
+        @JvmOverloads
         fun <D : Data> particle(type: Type<D, NoData>, count: Int, data: D, longDistance: Boolean = false): Particle<D, NoData> =
             particle(type.key(), count, data, NoData, longDistance)
 
+        @JvmStatic
+        @JvmOverloads
         fun <D : Data> particle(type: () -> Type<D, NoData>, count: Int, data: D, longDistance: Boolean = false): Particle<D, NoData> =
             Particle(type().key(), count, data, NoData, longDistance)
 
+        @JvmStatic
+        @JvmOverloads
         fun <D : Data, E : ExtraData> particle(type: Type<D, E>, count: () -> Int, data: D, extraData: E, longDistance: Boolean = false): Particle<D, E> =
             Particle(type.key(), count(), data, extraData, longDistance)
 
+        @JvmStatic
+        @JvmOverloads
         fun <D : Data, E : ExtraData> particle(type: () -> Type<D, E>, count: () -> Int, data: D, extraData: E, longDistance: Boolean = false): Particle<D, E> =
             Particle(type().key(), count(), data, extraData, longDistance)
     }

@@ -1,5 +1,5 @@
 plugins {
-    id("com.github.johnrengelman.shadow") version "7.1.1"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
 repositories {
@@ -9,8 +9,8 @@ repositories {
 }
 
 dependencies {
-    compileOnly("com.github.emortaldev:Minestom:01c28d0818")
-    testImplementation("com.github.emortaldev:Minestom:01c28d0818")
+    compileOnly("com.github.Minestom:Minestom:4ee5cbe424")
+    testImplementation("com.github.Minestom:Minestom:4ee5cbe424")
 }
 
 tasks {
