@@ -1,16 +1,18 @@
 package world.cepi.particle.util
 
+import net.minestom.server.coordinate.Point
 import net.minestom.server.coordinate.Vec
+import kotlin.math.pow
 
-class Vectors(private val start: Vec, private val end: Vec, private val step: Double) : Iterable<Vec> {
+class Points(private val start: Point, private val end: Point, private val step: Double) : Iterable<Point> {
     private val distSqr = end.distanceSquared(start)
     private val addVec = Vec(end.x() - start.x(), end.y() - start.y(), end.z() - start.z())
         .normalizeFast()
         .mul(step)
 
-    override fun iterator(): Iterator<Vec> = VectorIterator()
+    override fun iterator(): Iterator<Point> = PointIterator()
 
-    inner class VectorIterator : Iterator<Vec> {
+    inner class PointIterator : Iterator<Point> {
         private var current = start
         private var currentDist = .0
         private val currentDistSqr get() = currentDist * currentDist
@@ -18,7 +20,7 @@ class Vectors(private val start: Vec, private val end: Vec, private val step: Do
 
         override fun hasNext(): Boolean = !ended
 
-        override fun next(): Vec {
+        override fun next(): Point {
             currentDist += step
             if (currentDistSqr != distSqr && currentDistSqr > distSqr) ended = true
             if (ended) return end
@@ -28,11 +30,13 @@ class Vectors(private val start: Vec, private val end: Vec, private val step: Do
     }
 }
 
-class VectorsBuilder internal constructor(private val start: Vec, private val end: Vec) {
-    infix fun step(step: Double) = Vectors(start, end, step)
+class VectorsBuilder internal constructor(private val start: Point, private val end: Point) {
+    infix fun step(step: Double) = Points(start, end, step)
 }
 
-private fun Vec.normalizeFast(): Vec {
+internal fun Point.lengthSquared(): Double = x.pow(2) + y.pow(2) + z.pow(2)
+
+private fun Point.normalizeFast(): Point {
     var x = lengthSquared()
 
     // Fast inverse square root

@@ -2,6 +2,7 @@
 
 package world.cepi.particle
 
+import net.minestom.server.coordinate.Point
 import net.minestom.server.coordinate.Vec
 import net.minestom.server.network.packet.server.play.ParticlePacket
 import net.minestom.server.utils.binary.BinaryWriter
@@ -12,16 +13,16 @@ object PacketFactory {
 
     private val ids = MinestomParticle.values().associate { it.namespace() to it.id() }
 
-    fun createParticlePackets(particle: Particle<*, *>, renderer: Iterable<Vec>): Collection<ParticlePacket> =
+    fun createParticlePackets(particle: Particle<*, *>, renderer: Iterable<Point>): Collection<ParticlePacket> =
         renderer.map { createParticlePacket(particle, it) }
 
-    fun createParticlePackets(particle: Particle<*, *>, renderer: Sequence<Vec>): Collection<ParticlePacket> =
+    fun createParticlePackets(particle: Particle<*, *>, renderer: Sequence<Point>): Collection<ParticlePacket> =
         renderer.map { createParticlePacket(particle, it) }.toList()
 
-    fun createParticlePackets(particle: Particle<*, *>, renderer: Vec): Collection<ParticlePacket> =
+    fun createParticlePackets(particle: Particle<*, *>, renderer: Point): Collection<ParticlePacket> =
         Collections.singleton(createParticlePacket(particle, renderer))
 
-    fun createParticlePacket(particle: Particle<*, *>, renderer: Vec) = ParticlePacket(
+    fun createParticlePacket(particle: Particle<*, *>, renderer: Point) = ParticlePacket(
         ids[particle.name] ?: 0,
         particle.longDistance,
 

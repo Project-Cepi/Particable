@@ -1,15 +1,19 @@
 package world.cepi.particle.renderer.shape
 
+import net.minestom.server.coordinate.Point
 import net.minestom.server.coordinate.Vec
-import world.cepi.particle.renderer.VecSequence
+import world.cepi.particle.renderer.PointSequence
+import world.cepi.particle.util.x
+import world.cepi.particle.util.y
+import world.cepi.particle.util.z
 import kotlin.math.pow
 
 class QuadraticBeizerCurveRenderer(
     val points: Int = 20,
-    val start: Vec,
-    val pull: Vec,
-    val end: Vec
-) : VecSequence {
+    val start: Point,
+    val pull: Point,
+    val end: Point
+) : PointSequence {
 
     /**
      * @param k A number from 0 - 1

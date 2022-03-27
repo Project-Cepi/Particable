@@ -1,23 +1,20 @@
 package world.cepi.particle.renderer.shape
 
+import net.minestom.server.coordinate.Point
 import net.minestom.server.coordinate.Vec
-import world.cepi.particle.renderer.Renderer
-import world.cepi.particle.renderer.VecIterable
-import world.cepi.particle.renderer.VecSequence
-import java.awt.Shape
-import java.util.*
+import world.cepi.particle.renderer.PointSequence
 import kotlin.math.*
 
 data class SphereRenderer(
     /** The higher it is the more detailed it is. */
     val particles: Int = 50
-) : VecSequence {
+) : PointSequence {
 
     companion object {
         val phi = PI * (3.0 - sqrt(5.0))
     }
 
-    private val iterable = object : Iterator<Vec> {
+    private val iterable = object : Iterator<Point> {
 
         var particleCount = 0
 
@@ -36,5 +33,5 @@ data class SphereRenderer(
         }
     }
 
-    override fun iterator(): Iterator<Vec> = iterable.iterator()
+    override fun iterator(): Iterator<Point> = iterable.iterator()
 }

@@ -1,17 +1,18 @@
 package world.cepi.particle.renderer
 
+import net.minestom.server.coordinate.Point
 import net.minestom.server.coordinate.Vec
 import world.cepi.particle.renderer.shape.*
-import world.cepi.particle.util.Vectors
+import world.cepi.particle.util.Points
 import kotlin.math.PI
 import kotlin.math.asin
 
 object Renderer {
     fun point() = Vec.ZERO
 
-    fun fixedLine(from: Vec, to: Vec, step: Double = 0.1) = Vectors(from, to, step)
+    fun fixedLine(from: Point, to: Point, step: Double = 0.1) = Points(from, to, step)
 
-    fun rectangle(vec: Vec, step: Double = 0.2) = line(Vec(vec.x(), .0, .0), step) +
+    fun rectangle(vec: Point, step: Double = 0.2) = line(Vec(vec.x(), .0, .0), step) +
             line(Vec(.0, vec.y(), .0), step) +
             line(Vec(.0, .0, vec.z()), step) +
 
@@ -28,16 +29,16 @@ object Renderer {
             fixedLine(Vec(vec.x(), vec.y(), .0), Vec(vec.x(), .0, .0), step) +
             fixedLine(Vec(.0, vec.y(), vec.z()), Vec(.0, .0, vec.z()))
 
-    fun quadraticBeizerCurveRenderer(start: Vec, pull: Vec, end: Vec, points: Int)
+    fun quadraticBeizerCurveRenderer(start: Point, pull: Point, end: Point, points: Int)
         = QuadraticBeizerCurveRenderer(points, start, pull, end)
 
     fun fixedRectangle(from: Vec, to: Vec, step: Double = 0.1) = rectangle(from.max(to).sub(from.min(to)), step)
         .translate(from.min(to))
 
-    fun line(vector: Vec, step: Double = 0.1) = LineRenderer(vector, step)
+    fun line(vector: Point, step: Double = 0.1) = LineRenderer(vector, step)
 
-    fun polygon(points: Iterable<Vec>, step: Double = 0.1) = PolygonRenderer(points.asSequence(), step)
-    fun polygon(vararg points: Vec,  step: Double = 0.1) = PolygonRenderer(points.asSequence(), step)
+    fun polygon(points: Iterable<Point>, step: Double = 0.1) = PolygonRenderer(points.asSequence(), step)
+    fun polygon(vararg points: Point,  step: Double = 0.1) = PolygonRenderer(points.asSequence(), step)
 
     fun circle(radius: Double, divisions: Int = (2 * PI / asin(0.1 / radius)).toInt()) =
         CircleRenderer(radius, divisions)
