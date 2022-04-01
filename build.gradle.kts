@@ -4,7 +4,7 @@ plugins {
     `maven-publish`
 }
 
-group = "org.jglrxavpok.nbt"
+group = "world.cepi.particle"
 version = "2.0.0"
 
 allprojects {
@@ -20,17 +20,17 @@ allprojects {
 
     dependencies {
         // Use the Kotlin JDK 8 standard library.
-        compileOnly(kotlin("stdlib"))
+        //compileOnly(kotlin("stdlib"))
 
-        compileOnly(kotlin("reflect"))
+        //compileOnly(kotlin("reflect"))
 
         // Use the JUpiter test library.
-        testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
+        //testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
     }
 
-    tasks {
-        test { useJUnitPlatform() }
-    }
+    //tasks {
+    //    test { useJUnitPlatform() }
+    //}
 
     java {
         sourceCompatibility = JavaVersion.VERSION_17

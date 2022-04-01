@@ -1,4 +1,4 @@
-@file:Suppress("Unused", "MemberVisibilityCanBePrivate")
+//@file:Suppress("Unused", "MemberVisibilityCanBePrivate")
 
 package world.cepi.particle
 
@@ -7,7 +7,6 @@ import net.kyori.adventure.key.Keyed
 import net.kyori.examination.Examinable
 import net.kyori.examination.ExaminableProperty
 import net.kyori.examination.string.StringExaminer
-import net.minestom.server.coordinate.Vec
 import java.util.stream.Stream
 
 class Particle<D : Particle.Data, E : Particle.ExtraData> @JvmOverloads constructor(
