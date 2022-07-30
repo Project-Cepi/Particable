@@ -1,10 +1,10 @@
 package world.cepi.particle
 
-import world.cepi.particle.data.Color;
-import world.cepi.particle.data.OffsetAndSpeed;
-import world.cepi.particle.extra.*;
-import world.cepi.particle.Particle.Type;
-import net.minestom.server.particle.Particle;
+import net.minestom.server.particle.Particle
+import world.cepi.particle.Particle.Type
+import world.cepi.particle.data.Color
+import world.cepi.particle.data.OffsetAndSpeed
+import world.cepi.particle.extra.*
 
 object ParticleType {
     @JvmField
@@ -156,6 +156,18 @@ object ParticleType {
 
     @JvmField
     val SWEEP_ATTACK: Type<OffsetAndSpeed, NoData> = ParticleTypes.Default(Particle.SWEEP_ATTACK)
+
+    @JvmField
+    val SCULK_CHARGE: Type<OffsetAndSpeed, NoData> = ParticleTypes.Default(Particle.SCULK_CHARGE)
+
+    @JvmField
+    val SCULK_CHARGE_POP: Type<OffsetAndSpeed, NoData> = ParticleTypes.Default(Particle.SCULK_CHARGE_POP)
+
+    @JvmField
+    val SCULK_SOUL: Type<OffsetAndSpeed, NoData> = ParticleTypes.Default(Particle.SCULK_SOUL)
+
+    @JvmField
+    val SONIC_BOOM: Type<OffsetAndSpeed, NoData> = ParticleTypes.Default(Particle.SONIC_BOOM)
 
     @JvmField
     val TOTEM_OF_UNDYING: Type<OffsetAndSpeed, NoData> = ParticleTypes.Default(Particle.TOTEM_OF_UNDYING)

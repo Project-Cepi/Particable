@@ -4,13 +4,12 @@ plugins {
 
 repositories {
     mavenCentral()
-    maven(url = "https://repo.spongepowered.org/maven")
     maven(url = "https://jitpack.io")
 }
 
 dependencies {
-    compileOnly("com.github.Minestom:Minestom:f36304f613")
-    testImplementation("com.github.Minestom:Minestom:f36304f613")
+    compileOnly("com.github.Minestom:Minestom:08f37400b0")
+    testImplementation("com.github.Minestom:Minestom:08f37400b0")
 }
 
 tasks {
